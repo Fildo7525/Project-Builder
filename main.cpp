@@ -42,7 +42,7 @@ int main(int argc, char ** argv){
 
         command = dir + "/build.sh";
         file.open(command, std::ios::out);
-        file << "#!/bin/sh\n\nmv Build/makefile .\nmake\nmv makefile Build\nif [ $? -eq 0 ]\nthen\n\tmv main.o Source.o Build\n\tclear\n\t./" << dir << "\nfi" << std::endl;
+        file << "#!/bin/sh\n .\nmake -f ./Build/makefile\nif [ $? -eq 0 ]\nthen\n\tmv main.o Source.o Build\n\tclear\n\t./" << dir << "\nfi" << std::endl;
         file.close();
 	if(file.bad()) throw -5;
 	
