@@ -1,5 +1,7 @@
 # Project-Builder
 
+This program compatible with Linux
+
 The usage is extremly easy just type into console
 ```
  $ g++ main.cpp -o <nameAfterBuild>    // I named it projectBuild
