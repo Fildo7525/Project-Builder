@@ -1,6 +1,6 @@
 # Project-Builder
 
-This program compatible with Linux
+This program is compatible with Linux
 
 The usage is extremly easy just type into console
 ```
