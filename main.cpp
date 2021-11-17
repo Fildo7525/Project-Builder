@@ -4,21 +4,21 @@
 #include <fstream>
 
 int main(int argc, char ** argv){
-    if(argc < 2){
+    if(argc != 2){
         std::cerr << "\033[31mThe snippert is incorrect. Use it as project <projectname>\033[0m" << std::endl;
         return 1;
     }
     
     int err;
     std::string dir = argv[1], header = "Header.h", source = "Source.cpp";
-    std::string command = "mkdir " + dir + " && cd " + dir + " && touch main.cpp " + header + " " + source +" build.sh makefile && mkdir Build && chmod +x build.sh";
+    std::string command = "mkdir " + dir + " && cd " + dir + " && touch main.cpp " + header + " " + source +" build.sh compile.sh makefile && mkdir Build && chmod +x build.sh compile.sh";
 
     try{
         err = system(command.c_str());
 
         command = dir + "/main.cpp";
         std::fstream file(command, std::ios::out);
-        file << "#include \"Header.h\"\n\nint main(){\n\tstd::cout << \"Hello World!\\n\";\n\treturn 0;\n}" << std::endl;
+        file << "#include \"Header.h\"\n\nint main(){\n\tstd::cout << \"Hello World!\\n\";\n\treturn 0;\n}\n " << std::endl;
         file.close();
         if(file.bad()) throw -1;
 
@@ -36,18 +36,26 @@ int main(int argc, char ** argv){
 
         command = dir + "/makefile";
         file.open(command, std::ios::out);
-        file << "CC = g++\nSTD = -std=c++11\n\n" << dir << ": main.o Source.o\n\t${CC} ${STD} main.o Source.o -o " << dir << "\n\nmain.o: main.cpp\n\t${CC} ${STD} -c main.cpp\n\nSource.o: Source.cpp\n\t${CC} ${STD} -c Source.cpp" << std::endl;
+        file << "CC = g++\nSTD = -std=c++11\nHEADERS = "<< header <<"\n.PHONY: all\nall:main.o Source.o" << dir << std::endl << dir 
+             << ": main.o Source.o\n\t${CC} ${STD} main.o Source.o -o " << dir 
+             << "\n\nmain.o: main.cpp\n\t${CC} ${STD} -c main.cpp\n\nSource.o: Source.cpp\n\t${CC} ${STD} -c Source.cpp" << std::endl;
         file.close();
-	if(file.bad()) throw -4;
+	    if(file.bad()) throw -4;
 
         command = dir + "/build.sh";
         file.open(command, std::ios::out);
         file << "#!/bin/sh\n .\nmake -f ./Build/makefile\nif [ $? -eq 0 ]\nthen\n\tmv main.o Source.o Build\n\tclear\n\t./" << dir << "\nfi" << std::endl;
         file.close();
-	if(file.bad()) throw -5;
+	    if(file.bad()) throw -5;
+
+        command = dir + "/compile.sh";
+        file.open(command, std::ios::out);
+        file << "#!/bin/sh\n\nclear\nmake -f ./Build/makefile\nif [ $? -eq 0 ]\nthen\n\tmv main.o Source.o Build\nfi" << std::endl;
+        file.close();
+        if(file.bad()) throw -6;
 	
-    command = "mv " + dir + "/makefile " + dir +"/Build";  
-	err = system(command.c_str());
+        command = "mv " + dir + "/makefile " + dir +"/Build";  
+        err = system(command.c_str());
 
     }catch(int i){
         switch(i){
@@ -65,6 +73,9 @@ int main(int argc, char ** argv){
                 break;
             case -5:
                 std::cerr << "There was an error with bash.sh file" << std::endl;
+                break;
+            case -6:
+                std::cerr << "There was an error with compile.sh file" << std::endl;
                 break;
             default:
                 std::cerr << "An unidentified error has occured" << std::endl;
