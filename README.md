@@ -4,7 +4,7 @@ This program is compatible with Linux
 
 The usage is extremly easy just type into console
 ```
- $ g++ main.cpp -o <nameAfterBuild>    // I named it buildProject
+ $ make    // I named it buildProject
 
  // To create new project just type
  $ buildProject <ProjectName> -t<option>
