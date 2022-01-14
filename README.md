@@ -9,7 +9,7 @@ The usage is extremly easy just type into console
  // To create new project just type
  $ buildProject <ProjectName> -t<option>
 ```
-currently supprots:
+currently supports these options:
  - java / j
  - cpp (default without specifying '-t')
 
