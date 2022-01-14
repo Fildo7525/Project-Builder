@@ -4,11 +4,14 @@ This program is compatible with Linux
 
 The usage is extremly easy just type into console
 ```
- $ g++ main.cpp -o <nameAfterBuild>    // I named it projectBuild
+ $ g++ main.cpp -o <nameAfterBuild>    // I named it buildProject
 
  // To create new project just type
- $ projectBuild <ProjectName>
+ $ buildProject <ProjectName> -t<option>
 ```
+currently supprots:
+ - java / j
+ - cpp (default without specifying '-t')
 
 Furthermore, if you are writing code in VS code go into ```Keyboard Shortcuts``` ``` Ctrl + K ```
 switch into JSON view ( icon in the top right corner ) and add a snippet
