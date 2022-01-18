@@ -4,7 +4,8 @@
 #include <fstream>
 #include <getopt.h>
 
-#define GREEN "\033[32;3m"
+#define GREEN "\033[32;2m"
+#define	RED "\033[31;2m"
 #define NORM "\033[0;0m"
 
 void javaCreation(const std::string&);
@@ -18,12 +19,16 @@ int main(int argc, char ** argv){
 	//std::cout << argv[1] << std::endl;
 	int option;
 	bool typeFlag = false, err = false;
+
 	while((option = getopt(argc, argv,"t:")) != -1){
 		std::string oarg(optarg);
+		std::string newDir(argv[0]);
 		switch(option){
 			case 't':
 				if(typeFlag)
-					std::cerr << "Not allowed\n", exit(1);
+					std::cerr << RED << "Not allowed\n" << NORM << std::ends, exit(1);
+				if(newDir.find("-") == 0)
+					std::cerr << RED << "Directory must be specified as a second argument buildProject [projectname] <-t language>" << NORM << std::endl, exit(2);
 
 				if(oarg == "java" || oarg == "j")
 					javaCreation(argv[1]), typeFlag = true;
@@ -41,28 +46,27 @@ int main(int argc, char ** argv){
 }
 
 void javaCreation(const std::string& dir){
-	std::string main = dir + ".java";
 	//std::cout << GREEN << "Dir is in javaCreation: " << dir << std::endl;
-	std::string command = "mkdir " + dir + " && cd " + dir + " && touch " + main + " compile.sh build.sh && chmod 711 compile.sh build.sh";
+	std::string command = "mkdir " + dir + " && cd " + dir + " && touch Main.java compile.sh build.sh && chmod 711 compile.sh build.sh";
 	system(command.c_str());
 	//std::cout << command << NORM << std::endl;
 
-	command = dir + "/" + main;
+	command = dir + "/Main.java";
 	std::fstream file(command, std::ios::out);
-	file << "class " << dir << "{\n\tpublic static void main(String args[]){\n\t\tSystem.out.println(\"Hallo World!\");\n\t}\n}" << std::endl;
+	file << "public class Main {\n\tpublic static void main(String args[]){\n\t\tSystem.out.println(\"Hallo World!\");\n\t}\n}" << std::endl;
 	file.close();
 	//std::cout << GREEN<< command << NORM << std::endl;
 
 	command = dir + "/compile.sh";
 	file.open(command, std::ios::out);
-	file << "javac " << main << std::endl;
+	file << "javac Main.java"<< std::endl;
 	file.close();
 	//std::cout << GREEN<< command << NORM << std::endl;
 
 
 	command = dir + "/build.sh";
 	file.open(command, std::ios::out);
-	file << "javac " << main << ";\njava " << dir << std::endl;
+	file << "javac Main.java;\nif [ $? -eq 0 ]\nthen\n\tjava Main\nelse\n\trm Main.class\nfi" << std::endl;
 	file.close();
 	//std::cout << GREEN<< command << NORM << std::endl;
 }
