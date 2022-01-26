@@ -11,7 +11,18 @@ The usage is extremly easy just type into console
 ```
 currently supports these options:
  - java / j
- - cpp (default without specifying '-t')
+ - cpp
+
+Generates project folder with specified name in the argument
+/<name>
+  /Build
+  - build.sh
+  - compile.sh
+  - main.cpp
+  - Header.cpp
+  - Source.cpp
+  - .ccls (for code completion in neovim)
+  - .vimspector.json (debugging with vimspector)
 
 Furthermore, if you are writing code in VS code go into ```Keyboard Shortcuts``` ``` Ctrl + K ```
 switch into JSON view ( icon in the top right corner ) and add a snippet
