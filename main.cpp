@@ -73,11 +73,51 @@ void javaCreation(const std::string& dir){
 
 void cppCreation(const std::string& dir){
 	std::string header = "Header.h", source = "Source.cpp";
-	std::string command = "mkdir " + dir + " && cd " + dir + " && touch main.cpp " + header + " " + source +" build.sh compile.sh .ccls makefile && mkdir Build && chmod +x build.sh compile.sh";
+	std::string command = "mkdir " + dir + " && cd " + dir + " && touch main.cpp " + header + " " + source +" build.sh compile.sh .ccls .vimspector.json makefile && mkdir Build && chmod +x build.sh compile.sh";
 	system(command.c_str());
 	command = dir + "/.ccls";
 	std::fstream file(command, std::ios::out);
 	file << "clang++\n%h %cpp -std=c++17";
+	file.close();
+
+	command = dir + "/.vimspector.json";
+	file.open(command, std::ios::out);
+	file << "{\n" 
+			<< "\t\"configurations\": {\n"
+			 << "\t\"Launch\": {\n"
+				 << "\t\t\"adapter\": \"vscode-cpptools\",\n"
+				 << "\t\t\"default\" : true\n"
+				 << "\t\t\"breakpoints\": {\n"
+					 << "\t\t\t\"exception\": {\n"
+						 << "\t\t\t\t\"caught:\": \"\",\n"
+						 << "\t\t\t\t\"uncaught\": \"Y\"\n"
+					 << "}\n"
+				 << "},\n"
+				 << "\t\t\"filetypes\": [\n"
+					 << "\t\t\t\"cpp\",\n"
+					 << "\t\t\t\"c\",\n"
+					 << "\t\t\t\"objc\",\n"
+					 << "\t\t\t\"rust\"\n"
+				 << "\t\t],\n"
+				 << "\t\t\"configuration\": {\n"
+					 << "\t\t\t\"request\": \"launch\",\n"
+					 << "\t\t\t\"program\": \"${workspaceRoot}/" << dir <<"\",\n"
+					 << "\t\t\t\"args\": [],\n"
+					 << "\t\t\t\"cwd\": \"${workspaceRoot}\",\n"
+					 << "\t\t\t\"environment\": [],\n"
+					 << "\t\t\t\"externalConsole\": true,\n"
+					 << "\t\t\t\"stopOnEntry#json\": \"${stopOnEntry:true}\",\n"
+					 << "\t\t\t\"MIMode\": \"gdb\",\n"
+					 << "\t\t\t\"setupCommands\": [\n"
+						 << "\t\t\t\t{\n"
+							 << "\t\t\t\t\"description\": \"Enable pretty-printing for gdb\",\n"
+							 << "\t\t\t\t\"text\": \"-enable-pretty-printing\",\n"
+							 << "\t\t\t\t\"ignoreFailures\": true\n"
+						 << "\t\t\t\t}\n"
+					 << "\t\t\t]\n"
+				 << "\t\t}\n"
+			 << "\t}\n"
+		<< "}";
 	file.close();
 
 	command = dir + "/main.cpp";
@@ -97,7 +137,7 @@ void cppCreation(const std::string& dir){
 
 	command = dir + "/makefile";
 	file.open(command, std::ios::out);
-	file << "CC = g++\nSTD = -std=c++11\nHEADERS = "<< header <<"\n.PHONY: all\nall:main.o Source.o " << dir << std::endl << dir 
+	file << "CC = g++\nSTD = -std=c++11 -g\nHEADERS = "<< header <<"\n.PHONY: all\nall:main.o Source.o " << dir << std::endl << dir 
 		 << ": main.o Source.o\n\t${CC} ${STD} main.o Source.o -o " << dir 
 		 << "\n\nmain.o: main.cpp\n\t${CC} ${STD} -c main.cpp\n\nSource.o: Source.cpp\n\t${CC} ${STD} -c Source.cpp" << std::endl;
 	file.close();
