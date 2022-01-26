@@ -14,8 +14,8 @@ currently supports these options:
  - cpp
 
 Generates project folder with specified name in the argument
-/<name>
-  /Build
+- <name>
+  - /Build
   - build.sh
   - compile.sh
   - main.cpp
