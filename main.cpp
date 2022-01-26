@@ -48,7 +48,7 @@ int main(int argc, char ** argv){
 void javaCreation(const std::string& dir){
 	//std::cout << GREEN << "Dir is in javaCreation: " << dir << std::endl;
 	std::string command = "mkdir " + dir + " && cd " + dir + " && touch Main.java compile.sh build.sh && chmod 711 compile.sh build.sh";
-	system(command.c_str());
+	int trash = system(command.c_str());
 	//std::cout << command << NORM << std::endl;
 
 	command = dir + "/Main.java";
@@ -74,7 +74,7 @@ void javaCreation(const std::string& dir){
 void cppCreation(const std::string& dir){
 	std::string header = "Header.h", source = "Source.cpp";
 	std::string command = "mkdir " + dir + " && cd " + dir + " && touch main.cpp " + header + " " + source +" build.sh compile.sh .ccls .vimspector.json makefile && mkdir Build && chmod +x build.sh compile.sh";
-	system(command.c_str());
+	int trash = system(command.c_str());
 	command = dir + "/.ccls";
 	std::fstream file(command, std::ios::out);
 	file << "clang++\n%h %cpp -std=c++17";
@@ -84,39 +84,40 @@ void cppCreation(const std::string& dir){
 	file.open(command, std::ios::out);
 	file << "{\n" 
 			<< "\t\"configurations\": {\n"
-			 << "\t\"Launch\": {\n"
-				 << "\t\t\"adapter\": \"vscode-cpptools\",\n"
-				 << "\t\t\"default\" : true\n"
-				 << "\t\t\"breakpoints\": {\n"
-					 << "\t\t\t\"exception\": {\n"
-						 << "\t\t\t\t\"caught:\": \"\",\n"
-						 << "\t\t\t\t\"uncaught\": \"Y\"\n"
-					 << "}\n"
-				 << "},\n"
-				 << "\t\t\"filetypes\": [\n"
-					 << "\t\t\t\"cpp\",\n"
-					 << "\t\t\t\"c\",\n"
-					 << "\t\t\t\"objc\",\n"
-					 << "\t\t\t\"rust\"\n"
-				 << "\t\t],\n"
-				 << "\t\t\"configuration\": {\n"
-					 << "\t\t\t\"request\": \"launch\",\n"
-					 << "\t\t\t\"program\": \"${workspaceRoot}/" << dir <<"\",\n"
-					 << "\t\t\t\"args\": [],\n"
-					 << "\t\t\t\"cwd\": \"${workspaceRoot}\",\n"
-					 << "\t\t\t\"environment\": [],\n"
-					 << "\t\t\t\"externalConsole\": true,\n"
-					 << "\t\t\t\"stopOnEntry#json\": \"${stopOnEntry:true}\",\n"
-					 << "\t\t\t\"MIMode\": \"gdb\",\n"
-					 << "\t\t\t\"setupCommands\": [\n"
-						 << "\t\t\t\t{\n"
-							 << "\t\t\t\t\"description\": \"Enable pretty-printing for gdb\",\n"
-							 << "\t\t\t\t\"text\": \"-enable-pretty-printing\",\n"
-							 << "\t\t\t\t\"ignoreFailures\": true\n"
-						 << "\t\t\t\t}\n"
-					 << "\t\t\t]\n"
-				 << "\t\t}\n"
-			 << "\t}\n"
+			<< "\t\"Launch\": {\n"
+				<< "\t\t\"adapter\": \"vscode-cpptools\",\n"
+				<< "\t\t\"default\" : true,\n"
+				<< "\t\t\"breakpoints\": {\n"
+					<< "\t\t\t\"exception\": {\n"
+						<< "\t\t\t\t\"caught:\": \"\",\n"
+						<< "\t\t\t\t\"uncaught\": \"Y\"\n"
+					<< "\t\t\t}\n"
+				<< "\t\t},\n"
+				<< "\t\t\"filetypes\": [\n"
+					<< "\t\t\t\"cpp\",\n"
+					<< "\t\t\t\"c\",\n"
+					<< "\t\t\t\"objc\",\n"
+					<< "\t\t\t\"rust\"\n"
+				<< "\t\t],\n"
+				<< "\t\t\"configuration\": {\n"
+					<< "\t\t\t\"request\": \"launch\",\n"
+					<< "\t\t\t\"program\": \"${workspaceRoot}/" << dir <<"\",\n"
+					<< "\t\t\t\"args\": [],\n"
+					<< "\t\t\t\"cwd\": \"${workspaceRoot}\",\n"
+					<< "\t\t\t\"environment\": [],\n"
+					<< "\t\t\t\"externalConsole\": true,\n"
+					<< "\t\t\t\"stopOnEntry#json\": \"${stopOnEntry:true}\",\n"
+					<< "\t\t\t\"MIMode\": \"gdb\",\n"
+					<< "\t\t\t\"setupCommands\": [\n"
+						<< "\t\t\t\t{\n"
+							<< "\t\t\t\t\"description\": \"Enable pretty-printing for gdb\",\n"
+							<< "\t\t\t\t\"text\": \"-enable-pretty-printing\",\n"
+							<< "\t\t\t\t\"ignoreFailures\": true\n"
+						<< "\t\t\t\t}\n"
+					<< "\t\t\t]\n"
+					<< "\t\t\t}\n"
+				<< "\t\t}\n"
+			<< "\t}\n"
 		<< "}";
 	file.close();
 
@@ -153,6 +154,6 @@ void cppCreation(const std::string& dir){
 	file.close();
 
 	command = "mv " + dir + "/makefile " + dir +"/Build";  
-	system(command.c_str());
+	trash = system(command.c_str());
 
 }
