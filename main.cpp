@@ -12,11 +12,10 @@ void javaCreation(const std::string&);
 void cppCreation(const std::string&);
 
 int main(int argc, char ** argv){
-    if(argc < 2){
-        std::cerr << "\033[31mThe snippert is incorrect. Use it as buildProject [projectname] <-t language>\033[0m" << std::endl;
-        return 1;
-    }
-	//std::cout << argv[1] << std::endl;
+		if(argc < 2){
+				std::cerr << "\033[31mThe snippert is incorrect. Use it as buildProject [projectname] <-t language>\033[0m" << std::endl;
+				return 1;
+		}
 	int option;
 	bool typeFlag = false, err = false;
 
@@ -35,40 +34,30 @@ int main(int argc, char ** argv){
 				else if(oarg == "cpp" || oarg == "c++")
 					cppCreation(argv[1]), typeFlag = true;
 				break;
-
-			default:      
+			default:
 				std::cout << "error\n", err = true;
-		}	
-	}	
-	//std::cout << argv[2] << std::endl;
-	if(!typeFlag && !err)
-		cppCreation(argv[2]);
+		}
+	}
 }
 
 void javaCreation(const std::string& dir){
-	//std::cout << GREEN << "Dir is in javaCreation: " << dir << std::endl;
 	std::string command = "mkdir " + dir + " && cd " + dir + " && touch Main.java compile.sh build.sh && chmod 711 compile.sh build.sh";
 	int trash = system(command.c_str());
-	//std::cout << command << NORM << std::endl;
 
 	command = dir + "/Main.java";
 	std::fstream file(command, std::ios::out);
 	file << "public class Main {\n\tpublic static void main(String args[]){\n\t\tSystem.out.println(\"Hallo World!\");\n\t}\n}" << std::endl;
 	file.close();
-	//std::cout << GREEN<< command << NORM << std::endl; added comments
 
 	command = dir + "/compile.sh";
 	file.open(command, std::ios::out);
 	file << "javac Main.java"<< std::endl;
 	file.close();
-	//std::cout << GREEN<< command << NORM << std::endl; confllict
-
 
 	command = dir + "/build.sh";
 	file.open(command, std::ios::out);
 	file << "javac Main.java;\nif [ $? -eq 0 ]\nthen\n\tjava Main\nelse\n\trm Main.class\nfi" << std::endl;
 	file.close();
-	//std::cout << GREEN<< command << NORM << std::endl; I want a merge conflict
 }
 
 void cppCreation(const std::string& dir){
@@ -139,8 +128,8 @@ void cppCreation(const std::string& dir){
 	command = dir + "/makefile";
 	file.open(command, std::ios::out);
 	file << "CC = g++\nSTD = -std=c++11 -g\nHEADERS = "<< header <<"\n.PHONY: all\nall:main.o Source.o " << dir << std::endl << dir 
-		 << ": main.o Source.o\n\t${CC} ${STD} main.o Source.o -o " << dir 
-		 << "\n\nmain.o: main.cpp\n\t${CC} ${STD} -c main.cpp\n\nSource.o: Source.cpp\n\t${CC} ${STD} -c Source.cpp" << std::endl;
+		<< ": main.o Source.o\n\t${CC} ${STD} main.o Source.o -o " << dir 
+		<< "\n\nmain.o: main.cpp\n\t${CC} ${STD} -c main.cpp\n\nSource.o: Source.cpp\n\t${CC} ${STD} -c Source.cpp" << std::endl;
 	file.close();
 
 	command = dir + "/build.sh";
@@ -153,7 +142,6 @@ void cppCreation(const std::string& dir){
 	file << "#!/bin/sh\n\nclear\nmake -f ./Build/makefile\nif [ $? -eq 0 ]\nthen\n\tmv main.o Source.o Build\nfi" << std::endl;
 	file.close();
 
-	command = "mv " + dir + "/makefile " + dir +"/Build";  
+	command = "mv " + dir + "/makefile " + dir +"/Build";	
 	trash = system(command.c_str());
-
 }
