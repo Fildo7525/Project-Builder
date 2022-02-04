@@ -55,20 +55,20 @@ void javaCreation(const std::string& dir){
 	std::fstream file(command, std::ios::out);
 	file << "public class Main {\n\tpublic static void main(String args[]){\n\t\tSystem.out.println(\"Hallo World!\");\n\t}\n}" << std::endl;
 	file.close();
-	//std::cout << GREEN<< command << NORM << std::endl;
+	//std::cout << GREEN<< command << NORM << std::endl; added comments
 
 	command = dir + "/compile.sh";
 	file.open(command, std::ios::out);
 	file << "javac Main.java"<< std::endl;
 	file.close();
-	//std::cout << GREEN<< command << NORM << std::endl;
+	//std::cout << GREEN<< command << NORM << std::endl; confllict
 
 
 	command = dir + "/build.sh";
 	file.open(command, std::ios::out);
 	file << "javac Main.java;\nif [ $? -eq 0 ]\nthen\n\tjava Main\nelse\n\trm Main.class\nfi" << std::endl;
 	file.close();
-	//std::cout << GREEN<< command << NORM << std::endl;
+	//std::cout << GREEN<< command << NORM << std::endl; I want a merge conflict
 }
 
 void cppCreation(const std::string& dir){
