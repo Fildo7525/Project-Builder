@@ -12,10 +12,10 @@ void javaCreation(const std::string&);
 void cppCreation(const std::string&);
 
 int main(int argc, char ** argv){
-		if(argc < 2){
-				std::cerr << "\033[31mThe snippert is incorrect. Use it as buildProject [projectname] <-t language>\033[0m" << std::endl;
-				return 1;
-		}
+	if(argc < 2){
+			std::cerr << "\033[31mThe snippert is incorrect. Use it as buildProject [projectname] -t<language>\033[0m" << std::endl;
+			return 1;
+	}
 	int option;
 	bool typeFlag = false, err = false;
 
@@ -31,7 +31,7 @@ int main(int argc, char ** argv){
 
 				if(oarg == "java" || oarg == "j")
 					javaCreation(argv[1]), typeFlag = true;
-				else if(oarg == "cpp" || oarg == "c++")
+				else if(oarg == "cpp" || oarg == "c++" || oarg == "c")
 					cppCreation(argv[1]), typeFlag = true;
 				break;
 			default:
@@ -67,7 +67,7 @@ void cppCreation(const std::string& dir){
 
 	command = dir + "/main.cpp";
 	std::fstream file(command, std::ios::out);
-	file << "#include \"Header.h\"\n\nint main(){\n\tstd::cout << \"Hello World!\\n\";\n\treturn 0;\n}\n " << std::endl;
+	file << "#include \"Header.h\"\n\nint main()\n{\n\tstd::cout << \"Hello World!\\n\";\n\treturn 0;\n}" << std::endl;
 	file.close();
 
 	command = dir + "/Header.h";
@@ -85,7 +85,7 @@ void cppCreation(const std::string& dir){
 	file << "cmake_minimum_required(VERSION 3.0.0)\n"
 		<< "project(" << dir << " VERSION 0.1.0)\n"
 		<< "set(CMAKE_CXX_STANDARD 17)\n"
-		<< "add_executable(" << dir << " main.cpp)\n"
+		<< "add_executable(" << dir << " main.cpp Source.cpp)\n"
 		<< "#target_link_libraries(" << dir << " pthread)";
 	file.close();
 
@@ -99,6 +99,6 @@ void cppCreation(const std::string& dir){
 	file << "#!/bin/sh\n\nclear\ncmake --build ./cmake-build\n";
 	file.close();
 
-	command = "cd " + dir + " && cmake CMakeLists.txt -S . -B ./cmake-build -DCMAKE_EXPORT_COMPILE_COMMANDS=1";
+	command = "cd " + dir + " && cmake CMakeLists.txt -S . -B ./cmake-build -DCMAKE_EXPORT_COMPILE_COMMANDS=1 && mv ./cmake-build/compile_commands.json .";
 	trash = system(command.c_str());
 }

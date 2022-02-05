@@ -4,24 +4,23 @@ This program is compatible with Linux
 
 The usage is extremly easy just type into console
 ```
- $ make    // I named it buildProject
+ $ make    // I named it buildProject feel free to change name
 
  // To create new project just type
- $ buildProject <ProjectName> -t<option>
+ $ buildProject <ProjectName> -t<language>
 ```
 currently supports these options:
  - java / j
- - cpp
+ - cpp / c++ / c
 
 Generates project folder with specified name in the argument
-  - /Build
+  - /cmake-build
+  - compile_commands.json
   - build.sh
   - compile.sh
   - main.cpp
   - Header.cpp
   - Source.cpp
-  - .ccls (for code completion in neovim)
-  - .vimspector.json (debugging with vimspector)
 
 Furthermore, if you are writing code in VS code go into ```Keyboard Shortcuts``` ``` Ctrl + K ```
 switch into JSON view ( icon in the top right corner ) and add a snippet
