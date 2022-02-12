@@ -1,15 +1,5 @@
-#include <iostream>
-#include <string>
-#include <unistd.h>
-#include <fstream>
-#include <getopt.h>
-
-#define GREEN "\033[32;2m"
-#define	RED "\033[31;2m"
-#define NORM "\033[0;0m"
-
-void javaCreation(const std::string&);
-void cppCreation(const std::string&);
+#include "include/Header.h"
+#include <cstdio>
 
 int main(int argc, char ** argv){
 	if(argc < 2){
@@ -17,88 +7,46 @@ int main(int argc, char ** argv){
 			return 1;
 	}
 	int option;
-	bool typeFlag = false, err = false;
+	flags opts;
+	// printArgunets(argv);
 
-	while((option = getopt(argc, argv,"t:")) != -1){
-		std::string oarg(optarg);
+	while((option = getopt(argc, argv,"qt:")) != -1){
 		std::string newDir(argv[0]);
 		switch(option){
-			case 't':
-				if(typeFlag)
+			case 't': {
+				std::string oarg(optarg);
+				// std::cout << "OPTION t Marked\n";
+				// printArgunets(argv);
+				if(opts.typeFlag)
 					std::cerr << RED << "Not allowed\n" << NORM << std::ends, exit(1);
 				if(newDir.find("-") == 0)
 					std::cerr << RED << "Directory must be specified as a second argument buildProject [projectname] <-t language>" << NORM << std::endl, exit(2);
 
 				if(oarg == "java" || oarg == "j")
-					javaCreation(argv[1]), typeFlag = true;
+					opts.t = flags::language::java, opts.typeFlag = true;
 				else if(oarg == "cpp" || oarg == "c++" || oarg == "c")
-					cppCreation(argv[1]), typeFlag = true;
+					opts.t = flags::language::cpp, opts.typeFlag = true;
 				break;
+			}
+
+			case 'q':
+				// std::clog << "QT marked\n";
+				opts.q = true;
+				break;
+
 			default:
-				std::cout << "error\n", err = true;
+				std::perror("Getopt: "), opts.err = true;
 		}
 	}
-}
-
-void javaCreation(const std::string& dir){
-	std::string command = "mkdir " + dir + " && cd " + dir + " && touch Main.java compile.sh build.sh && chmod 711 compile.sh build.sh";
-	int trash = system(command.c_str());
-
-	command = dir + "/Main.java";
-	std::fstream file(command, std::ios::out);
-	file << "public class Main {\n\tpublic static void main(String args[]){\n\t\tSystem.out.println(\"Hallo World!\");\n\t}\n}" << std::endl;
-	file.close();
-
-	command = dir + "/compile.sh";
-	file.open(command, std::ios::out);
-	file << "javac Main.java"<< std::endl;
-	file.close();
-
-	command = dir + "/build.sh";
-	file.open(command, std::ios::out);
-	file << "javac Main.java;\nif [ $? -eq 0 ]\nthen\n\tjava Main\nelse\n\trm Main.class\nfi" << std::endl;
-	file.close();
-}
-
-void cppCreation(const std::string& dir){
-	std::string header = "Header.h", source = "Source.cpp";
-	std::string command = "mkdir " + dir + " && cd " + dir + " && touch main.cpp " + header + " " + source +" build.sh compile.sh CMakeLists.txt && mkdir cmake-build && chmod +x build.sh compile.sh";
-	int trash = system(command.c_str());
-
-	command = dir + "/main.cpp";
-	std::fstream file(command, std::ios::out);
-	file << "#include \"Header.h\"\n\nint main()\n{\n\tstd::cout << \"Hello World!\\n\";\n\treturn 0;\n}" << std::endl;
-	file.close();
-
-	command = dir + "/Header.h";
-	file.open(command, std::ios::out);
-	file << "#pragma once\n\n#include <iostream>\n" << std::endl;
-	file.close();
-
-	command = dir + "/Source.cpp";
-	file.open(command, std::ios::out);
-	file << "#include \"Header.h\"\n" << std::endl;
-	file.close();
-
-	command = dir + "/CMakeLists.txt";
-	file.open(command, std::ios::out);
-	file << "cmake_minimum_required(VERSION 3.0.0)\n"
-		<< "project(" << dir << " VERSION 0.1.0)\n"
-		<< "set(CMAKE_CXX_STANDARD 17)\n"
-		<< "add_executable(" << dir << " main.cpp Source.cpp)\n"
-		<< "#target_link_libraries(" << dir << " pthread)";
-	file.close();
-
-	command = dir + "/build.sh";
-	file.open(command, std::ios::out);
-	file << "#!/bin/sh\ncmake --build ./cmake-build\nif [ $? -eq 0 ];then\n./cmake-build/" << dir << "\nfi";
-	file.close();
-
-	command = dir + "/compile.sh";
-	file.open(command, std::ios::out);
-	file << "#!/bin/sh\n\nclear\ncmake --build ./cmake-build\n";
-	file.close();
-
-	command = "cd " + dir + " && cmake CMakeLists.txt -S . -B ./cmake-build -DCMAKE_EXPORT_COMPILE_COMMANDS=1 && mv ./cmake-build/compile_commands.json .";
-	trash = system(command.c_str());
+	// printArgunets(argv);
+	if (opts.t == flags::language::java) {
+		javaCreation(argv[2]);
+	} else {
+		int idx = 2;
+		if (opts.q) {
+			idx = 3;
+			// std::clog << "Argument 3: " << argv[3] << '\n';
+		}
+		cppCreation(argv[idx], opts.q);
+	}
 }
