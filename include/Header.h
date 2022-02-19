@@ -11,6 +11,7 @@
 #define GREEN_BOLD "\033[32;1m"
 #define GREEN_BOLD_ITALICS "\033[32;1;3m"
 #define	RED "\033[31;2m"
+#define ORANGE "\033[48:2:255:165;1m"
 #define NORM "\033[0;0m"
 
 #define DEFAULT_PACKAGE_LOCATION "com.example"
@@ -24,13 +25,14 @@ struct flags {
 
 	language t;
 	bool q;
+	bool m;
 	bool typeFlag;
 	bool err;
 
 	flags() : t(), q(false), typeFlag(false), err(false) { }
 };
 
-void javaCreation(std::string);
+void javaCreation(std::string dir, bool maven);
 void cppCreation(const std::string&, bool qt);
 
 std::vector<std::string> packageDeduction(const std::string &packagePath);

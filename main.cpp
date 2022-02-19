@@ -10,7 +10,7 @@ int main(int argc, char ** argv){
 	flags opts;
 	// printArgunets(argv);
 
-	while((option = getopt(argc, argv,"qt:")) != -1){
+	while((option = getopt(argc, argv,"qmt:")) != -1){
 		std::string newDir(argv[0]);
 		switch(option){
 			case 't': {
@@ -34,15 +34,21 @@ int main(int argc, char ** argv){
 				opts.q = true;
 				break;
 
+			case 'm':
+				opts.m = true;
+				break;
 			default:
 				std::perror("Getopt: "), opts.err = true;
 		}
 	}
 	// printArgunets(argv);
+	int idx = 2;
 	if (opts.t == flags::language::java) {
-		javaCreation(argv[2]);
+		if (opts.m) {
+			idx = 3;
+		}
+		javaCreation(argv[idx], opts.m);
 	} else {
-		int idx = 2;
 		if (opts.q) {
 			idx = 3;
 			// std::clog << "Argument 3: " << argv[3] << '\n';
