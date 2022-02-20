@@ -47,7 +47,8 @@ void cppCreation(const std::string& dir, bool qt){
 	} else {
 		file << "cmake_minimum_required(VERSION 3.0.0)\n"
 			<< "project(" << dir << " VERSION 0.1.0)\n\n"
-			<< "set(CMAKE_CXX_STANDARD 17)\n\n"
+			<< "set(CMAKE_CXX_STANDARD 17)\n"
+			<< "set(CMAKE_EXPORT_COMPILE_COMMANDS ON)\n\n"
 			<< "add_executable(" << dir << " main.cpp Source.cpp)\n"
 			<< "#target_link_libraries(" << dir << " pthread)\n#example of linking libraries";
 	}
