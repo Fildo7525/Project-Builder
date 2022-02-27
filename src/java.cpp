@@ -15,7 +15,8 @@ void javaCreation(std::string dir, bool maven){
 
 	auto slashedPackedLocation = replaceDots(packageLocation);
 
-	std::string command = "mkdir " + dir + " && cd " + dir + " && touch compile.sh build.sh && chmod 711 compile.sh build.sh && mkdir -p " + slashedPackedLocation;// + " && touch Main.java";
+	std::string command = "mkdir " + dir + " && cd " + dir + " && touch compile.sh build.sh && chmod 711 compile.sh build.sh && mkdir -p "
+							+ slashedPackedLocation;// + " && touch Main.java";
 	int trash = system(command.c_str());
 
 	command = dir + "/" + slashedPackedLocation + "/Main.java";
@@ -35,7 +36,8 @@ void javaCreation(std::string dir, bool maven){
 		file.close();
 	}
 	else {
-		command = "mkdir -p " + dir + "/src/main/java && mv " + dir + "/" + slashedPackedLocation.substr(0, slashedPackedLocation.find_first_of("/")) + " " + dir + "/src/main/java";
+		command = "mkdir -p " + dir + "/src/main/java && mv " + dir + "/" + slashedPackedLocation.substr(0, slashedPackedLocation.find_first_of("/")) 
+				+ " " + dir + "/src/main/java && chmod 666 " + dir + "/src/main/java/" + slashedPackedLocation + "/Main.java";
 		// std::clog << ORANGE << command << NORM << std::endl;
 		compile_command = "mvnw install\nmvnw compile\n";
 
@@ -66,7 +68,7 @@ void javaCreation(std::string dir, bool maven){
 		file << "mvn clean install\n"
 			<< "# mvn dependency:\n"
 			<< "if [[ $? == 0 ]]; then\n"
-			<< "\tclean\n\tjava -Dfile.encoding=UTF-8 -cp ./target/classes " << packageLocation << ".Main\n"
+			<< "\tclear\n\tjava -Dfile.encoding=UTF-8 -cp ./target/classes " << packageLocation << ".Main\n"
 			<< "fi" << std::endl;
 		file.close();
 
