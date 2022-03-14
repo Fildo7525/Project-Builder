@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <string>
 
+std::string shellInit();
+
 void javaCreation(std::string dir, bool maven){
 	std::string compile_command = "javac --release 11 -Werror -d ./debug ";
 
@@ -65,7 +67,8 @@ void javaCreation(std::string dir, bool maven){
 
 		command = dir + "/build.sh";
 		file.open(command, std::ios::out);
-		file << "mvn clean install\n"
+		file << shellInit() << '\n'
+			<< "mvn clean install\n"
 			<< "# mvn dependency:\n"
 			<< "if [[ $? == 0 ]]; then\n"
 			<< "\tclear\n\tjava -Dfile.encoding=UTF-8 -cp ./target/classes " << packageLocation << ".Main\n"
@@ -74,12 +77,17 @@ void javaCreation(std::string dir, bool maven){
 
 		command = dir + "/compile.sh";
 		file.open(command, std::ios::out);
-		file << "mvn clean install\n"
+		file << shellInit() << '\n'
+			<< "mvn clean install\n"
 			<< "# mvn dependency:\n" << std::endl;
 		file.close();
 	}
 }
 
+std::string shellInit()
+{
+	return std::string("#!") +  getenv("SHELL");
+}
 
 std::string replaceDots(const std::string &packagePath)
 {
