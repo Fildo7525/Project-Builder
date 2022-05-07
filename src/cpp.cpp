@@ -1,17 +1,17 @@
 #include "../include/Header.h"
+#include <iostream>
 
 void cppCreation(const std::string& dir, bool qt){
 	std::string header = "Header.h", source = "Source.cpp";
-	std::string command = "mkdir " + dir + " && cd " + dir + " && touch main.cpp " + header + " " + source +" build.sh compile.sh CMakeLists.txt && chmod +x build.sh compile.sh";
+	std::string command = "mkdir " + dir + " && cd " + dir + " && touch main.cpp " + header + " " + source +" build.sh compile.sh CMakeLists.txt && mkdir cmake-build && chmod +x build.sh compile.sh";
 	int trash = system(command.c_str());
 
 	command = dir + "/main.cpp";
 	std::fstream file(command, std::ios::out);
-	if (qt) 
+	if (qt)
 		file << "#include <QCoreApplication>\n#include \"" << dir << ".h\"\n\nint main(int argc, char *argv[])\n{\n\tQCoreApplication a(argc, argv);\n\tstd::cout << \"Hello World!\\n\";\n\treturn a.exec();\n}\n" << std::endl;
 	else
 		file << "#include \"" << dir << ".h\"\n\nint main()\n{\n\tstd::cout << \"Hello World!\\n\";\n\treturn 0;\n}\n" << std::endl;
-	
 	file.close();
 
 	command = dir + "/" + dir + ".h";
@@ -60,7 +60,6 @@ void cppCreation(const std::string& dir, bool qt){
 	} else {
 		file << "cmake_minimum_required(VERSION 3.0.0)\n"
 			<< "project(" << dir << " VERSION 0.1.0)\n\n"
-
 			<< "set(CMAKE_CXX_STANDARD 17)\n"
 			<< "set(CMAKE_EXPORT_COMPILE_COMMANDS ON)\n\n"
 			<< "set(SOURCES\n\tmain.cpp\n\tSource.cpp\n)\n\n"
