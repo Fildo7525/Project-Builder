@@ -1,3 +1,7 @@
-#!/bin/bash
+#!/usr/bin/zsh
 
-make
+cd build
+make -j16 
+# if [[ ?$ == 0 ]]; then
+# 	./buildProject -tj
+# fi

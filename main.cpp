@@ -1,5 +1,4 @@
 #include "include/Header.h"
-#include <cstdio>
 
 int main(int argc, char ** argv){
 	if(argc < 2){
@@ -8,7 +7,7 @@ int main(int argc, char ** argv){
 	}
 	int option;
 	flags opts;
-	// printArgunets(argv);
+	// printArgumets(argv);
 
 	while((option = getopt(argc, argv,"qmt:")) != -1){
 		std::string newDir(argv[0]);
@@ -16,7 +15,7 @@ int main(int argc, char ** argv){
 			case 't': {
 				std::string oarg(optarg);
 				// std::cout << "OPTION t Marked\n";
-				// printArgunets(argv);
+				// printArgumets(argv);
 				if(opts.typeFlag)
 					std::cerr << RED << "Not allowed\n" << NORM << std::ends, exit(1);
 				if(newDir.find("-") == 0)
@@ -35,24 +34,29 @@ int main(int argc, char ** argv){
 				break;
 
 			case 'm':
+				std::cout << "setting m to true\n";
 				opts.m = true;
 				break;
 			default:
 				std::perror("Getopt: "), opts.err = true;
 		}
 	}
-	// printArgunets(argv);
+	printArgumets(argv, argc);
+	std::clog << "I am here\n";
 	int idx = 2;
 	if (opts.t == flags::language::java) {
 		if (opts.m) {
 			idx = 3;
 		}
+		std::clog << "Initialising javaCreation with index " << idx << "\n";
 		javaCreation(argv[idx], opts.m);
-	} else {
+	} else if (opts.t == flags::language::cpp) {
 		if (opts.q) {
 			idx = 3;
 			// std::clog << "Argument 3: " << argv[3] << '\n';
 		}
 		cppCreation(argv[idx], opts.q);
+	} else {
+		std::cerr << "Filetype does not exist";
 	}
 }

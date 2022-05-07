@@ -16,7 +16,7 @@
 
 #define DEFAULT_PACKAGE_LOCATION "com.example"
 
-void printArgunets(char **argv);
+void printArgumets(char **argv, int size);
 
 struct flags {
 	enum class language {
@@ -29,7 +29,7 @@ struct flags {
 	bool typeFlag;
 	bool err;
 
-	flags() : t(), q(false), typeFlag(false), err(false) { }
+	flags() : t(), q(false), m(false), typeFlag(false), err(false) { }
 };
 
 void javaCreation(std::string dir, bool maven);
