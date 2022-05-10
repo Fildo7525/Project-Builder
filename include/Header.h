@@ -23,17 +23,24 @@ struct flags {
 		java, cpp
 	};
 
-	language t;
-	bool q;
-	bool m;
+	language lang;
+	bool qt;
+	bool openCV;
+	bool maven;
 	bool typeFlag;
 	bool err;
 
-	flags() : t(), q(false), m(false), typeFlag(false), err(false) { }
+	flags()
+	: lang()
+	, qt(false)
+	, openCV(false)
+	, maven(false)
+	, typeFlag(false)
+	, err(false) { }
 };
 
 void javaCreation(std::string dir, bool maven);
-void cppCreation(const std::string&, bool qt);
+void cppCreation(const std::string&, const flags &languageFlags);
 
 std::vector<std::string> packageDeduction(const std::string &packagePath);
 std::string replaceDots(const std::string &packagePath);

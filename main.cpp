@@ -9,7 +9,7 @@ int main(int argc, char ** argv){
 	flags opts;
 	// printArgumets(argv);
 
-	while((option = getopt(argc, argv,"qmt:")) != -1){
+	while((option = getopt(argc, argv,"qcmt:")) != -1){
 		std::string newDir(argv[0]);
 		switch(option){
 			case 't': {
@@ -17,26 +17,34 @@ int main(int argc, char ** argv){
 				// std::cout << "OPTION t Marked\n";
 				// printArgumets(argv);
 				if(opts.typeFlag)
-					std::cerr << RED << "Not allowed\n" << NORM << std::ends, exit(1);
-				if(newDir.find("-") == 0)
-					std::cerr << RED << "Directory must be specified as a second argument buildProject [projectname] <-t language>" << NORM << std::endl, exit(2);
+					std::cerr << RED << "Not allowed for multiple languages\n" << NORM << std::ends, exit(1);
+				if(newDir.find("-") == 0) {
+					std::cerr << RED << "Directory must be specified as a second argument buildProject [projectname] <-t language>\n"
+							<< "Options:\n\t-q QT5 included (C++)\n\t-c OpenCV includec (C++)\n\t-m maven build system (Java)\n\n"
+							<< "if language is not specified in particular option than it's ignored"<< NORM << std::endl, exit(2);
+				}
 
 				if(oarg == "java" || oarg == "j")
-					opts.t = flags::language::java, opts.typeFlag = true;
+					opts.lang = flags::language::java, opts.typeFlag = true;
 				else if(oarg == "cpp" || oarg == "c++" || oarg == "c")
-					opts.t = flags::language::cpp, opts.typeFlag = true;
+					opts.lang = flags::language::cpp, opts.typeFlag = true;
 				break;
 			}
 
 			case 'q':
 				// std::clog << "QT marked\n";
-				opts.q = true;
+				opts.qt = true;
+				break;
+
+			case 'c':
+				opts.openCV = true;
 				break;
 
 			case 'm':
 				std::cout << "setting m to true\n";
-				opts.m = true;
+				opts.maven = true;
 				break;
+
 			default:
 				std::perror("Getopt: "), opts.err = true;
 		}
@@ -44,18 +52,22 @@ int main(int argc, char ** argv){
 	printArgumets(argv, argc);
 	std::clog << "I am here\n";
 	int idx = 2;
-	if (opts.t == flags::language::java) {
-		if (opts.m) {
-			idx = 3;
+	if (opts.lang == flags::language::java) {
+		if (opts.maven) {
+			idx++;
 		}
 		std::clog << "Initialising javaCreation with index " << idx << "\n";
-		javaCreation(argv[idx], opts.m);
-	} else if (opts.t == flags::language::cpp) {
-		if (opts.q) {
-			idx = 3;
-			// std::clog << "Argument 3: " << argv[3] << '\n';
+		javaCreation(argv[idx], opts.maven);
+	} else if (opts.lang == flags::language::cpp) {
+		if (opts.qt) {
+			idx++;
+			// std::clog << "Argument 3: " << argv[idx] << '\n';
 		}
-		cppCreation(argv[idx], opts.q);
+		if (opts.openCV) {
+			idx++;
+			std::clog << "Argument 3 OpenCV: " << argv[idx] << '\n';
+		}
+		cppCreation(argv[idx], opts);
 	} else {
 		std::cerr << "Filetype does not exist";
 	}
