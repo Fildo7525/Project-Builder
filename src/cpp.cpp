@@ -2,9 +2,8 @@
 #include <iostream>
 
 void cppCreation(const std::string& dir, const flags &languageFlags){
-	std::string header = "Header.h", source = "Source.cpp";
-	std::string command = "mkdir " + dir + " && cd " + dir + " && touch main.cpp " + header + " " + source +" build.sh compile.sh CMakeLists.txt && mkdir cmake-build && chmod +x build.sh compile.sh";
-	int trash = system(command.c_str());
+	std::string command = "mkdir " + dir + " && cd " + dir + " && touch main.cpp build.sh compile.sh CMakeLists.txt && mkdir cmake-build && chmod +x build.sh compile.sh";
+	system(command.c_str());
 
 	command = dir + "/main.cpp";
 	std::fstream file(command, std::ios::out);
@@ -88,6 +87,6 @@ void cppCreation(const std::string& dir, const flags &languageFlags){
 	file.close();
 
 	command = "cd " + dir + " && cmake CMakeLists.txt -S . -B ./build && cp ./build/compile_commands.json .";
-	trash = system(command.c_str());
+	system(command.c_str());
 }
 
