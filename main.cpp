@@ -17,7 +17,7 @@ int main(int argc, char ** argv)
 			idx++;
 		}
 		std::clog << "Initialising javaCreation with index " << idx << "\n";
-		makeJavaProject(argv[idx], opts.maven);
+		makeJavaProject(argv[idx], opts);
 	}
 	else if (opts.lang == flags::language::cpp) {
 		if (opts.qt) {

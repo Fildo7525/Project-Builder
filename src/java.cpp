@@ -1,6 +1,6 @@
 #include "../include/Header.h"
 
-void makeJavaProject(const std::string &dir, bool maven)
+void makeJavaProject(const std::string &dir, const flags &languageFlags)
 {
 	std::string packageLocation;
 
@@ -22,7 +22,7 @@ void makeJavaProject(const std::string &dir, bool maven)
 	file << "package " << packageLocation << ";\n\npublic class Main {\n\tpublic static void main(String args[]){\n\t\tSystem.out.println(\"Hallo World!\");\n\t}\n}" << std::endl;
 	file.close();
 
-	if (!maven) {
+	if (!languageFlags.maven) {
 		std::string compile_command = "javac --release 11 -Werror -d ./debug ";
 		std::cout << compile_command << '\n';
 

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "flags.h"
 #include <string>
 
 /**
@@ -7,9 +8,8 @@
  *
  * @param dir Directory where will the project be created.
  * @param maven Wheather the project should use maven or not.
- * TODO: replace maven with flags. For further development.
  */
-void makeJavaProject(const std::string &dir, bool maven);
+void makeJavaProject(const std::string &dir, const flags &languageFlags);
 
 /**
  * @brief Retrieve unix relative path from java package style.
