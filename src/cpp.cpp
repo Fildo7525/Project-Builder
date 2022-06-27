@@ -8,7 +8,6 @@
 #include <iostream>
 #include <string>
 
-
 void makeCppProject(const std::string &dir, const flags &languageFlags){
 	std::string command = "mkdir " + dir + " && cd " + dir + " && touch main.cpp build.sh compile.sh CMakeLists.txt && mkdir cmake-build && chmod +x build.sh compile.sh";
 	system(command.c_str());
@@ -54,8 +53,7 @@ void generateMainFile(const std::string &dir, const flags &languageFlags)
 
 	file << "#include \"" << dir << ".h\"\n\nint main(int argc, char *argv[])\n{\n"
 				<< (languageFlags.qt ? "\tQCoreApplication a(argc, argv);\n" : "")
-				<< tabs.up()()
-				<< "std::cout << \"Hello World!\\n\";\n"
+				<< tabs.up()() << "std::cout << \"Hello World!\\n\";\n"
 				<< (languageFlags.qt ? "\t// a.exec(); // event loop\n" : "")
 				<< tabs() << "return 0;\n"
 			<< "}\n" << std::endl;

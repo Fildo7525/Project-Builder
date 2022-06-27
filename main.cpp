@@ -3,31 +3,31 @@
 
 int main(int argc, char ** argv)
 {
-	if(argc < 2){
+	if(argc < 2) {
 		printHelp(std::cout);
 		return 0;
 	}
 
 	flags opts = deduceFlagOptions(argc, argv);
 
-	int idx = 2;
+	int projectNameIdx = 2;
 
 	if (opts.lang == flags::language::java) {
 		if (opts.maven) {
-			idx++;
+			projectNameIdx++;
 		}
-		std::clog << "Initialising javaCreation with index " << idx << "\n";
-		makeJavaProject(argv[idx], opts);
+		std::clog << "Initialising javaCreation with index " << projectNameIdx << "\n";
+		makeJavaProject(argv[projectNameIdx], opts);
 	}
 	else if (opts.lang == flags::language::cpp) {
 		if (opts.qt) {
-			idx++;
+			projectNameIdx++;
 		}
 		if (opts.openCV) {
-			idx++;
-			std::clog << "Argument 3 OpenCV: " << argv[idx] << '\n';
+			projectNameIdx++;
+			std::clog << "Argument 3 OpenCV: " << argv[projectNameIdx] << '\n';
 		}
-		makeCppProject(argv[idx], opts);
+		makeCppProject(argv[projectNameIdx], opts);
 	}
 	else {
 		std::cerr << "Filetype does not exist\n";
