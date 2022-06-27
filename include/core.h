@@ -27,3 +27,30 @@ std::string shellInit();
  */
 flags deduceFlagOptions(int argc, char **argv);
 
+/**
+ * @class indent
+ * @brief Class represents the indentation of the code.
+ */
+class indent
+{
+public:
+	/**
+	 * @brief Returns the indentation.
+	 */
+	std::string operator() ();
+
+	/**
+	 * @brief Increases the indentation.
+	 */
+	indent &up();
+
+	/**
+	 * @brief Decreases the indentation
+	 */
+	indent &down();
+
+private:
+	/// Indentation string.
+	std::string m_indentation;
+};
+

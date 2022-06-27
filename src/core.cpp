@@ -64,3 +64,23 @@ flags deduceFlagOptions(int argc, char **argv)
 	return opts;
 }
 
+std::string indent::operator()()
+{
+	return m_indentation;
+}
+
+indent &indent::up()
+{
+	m_indentation += "\t";
+	return *this;
+}
+
+indent &indent::down()
+{
+	if (m_indentation.size() == 0)
+		return *this;
+
+	m_indentation.pop_back();
+	return *this;
+}
+
