@@ -3,6 +3,15 @@
 #include <iostream>
 #include <unistd.h>
 
+std::ostream &printHelp(std::ostream &os)
+{
+	return os << "The snippert is incorrect. Use it as buildProject <projectname> -t<language> [options]\n"
+				<< "\tsupported languages:\n\t\tcpp:\t-tc\n\t\tjava:\t-tj\n\n"
+				<< "\toptions for C++:\n\t\tQT5:\t-q\n\t\tOpenCV:\t-c\n"
+				<< "\toptions for Java:\n\t\tMaven:\t-m"
+	<< std::endl;
+}
+
 void printArgumets(char **argv, int size)
 {
 	int i = 0;

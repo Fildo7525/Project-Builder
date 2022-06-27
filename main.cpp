@@ -1,10 +1,11 @@
+#include "core.h"
 #include "include/Header.h"
 
 int main(int argc, char ** argv)
 {
 	if(argc < 2){
-			std::cerr << "\033[31mThe snippert is incorrect. Use it as buildProject [projectname] -t<language>\033[0m" << std::endl;
-			return 1;
+		printHelp(std::cout);
+		return 0;
 	}
 
 	flags opts = deduceFlagOptions(argc, argv);
@@ -29,7 +30,9 @@ int main(int argc, char ** argv)
 		makeCppProject(argv[idx], opts);
 	}
 	else {
-		std::cerr << "Filetype does not exist";
+		std::cerr << "Filetype does not exist\n";
+		printHelp();
+		return 1;
 	}
 	return 0;
 }

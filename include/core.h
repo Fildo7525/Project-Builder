@@ -3,7 +3,15 @@
 #include "flags.h"
 #include "colors.h"
 
+#include <iostream>
 #include <string>
+
+/**
+ * @brief Prints help to the console.
+ *
+ * @param os Output stream where will be the help printed.
+ */
+std::ostream &printHelp(std::ostream &os = std::cerr);
 
 /**
  * @brief Prints arguments to the console.
