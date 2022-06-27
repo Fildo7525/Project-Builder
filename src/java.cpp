@@ -1,13 +1,7 @@
 #include "../include/Header.h"
 
-std::string shellInit();
-
-void javaCreation(std::string dir, bool maven){
-
-	std::string compile_command = "javac --release 11 -Werror -d ./debug ";
-	std::cout << compile_command << '\n';
-
-
+void makeJavaProject(const std::string &dir, bool maven)
+{
 	std::string packageLocation;
 
 	std::cout << "Enter the package name (com.example)[enter for default]: ";
@@ -15,12 +9,12 @@ void javaCreation(std::string dir, bool maven){
 	if (packageLocation.empty())
 		packageLocation = DEFAULT_PACKAGE_LOCATION;
 
-	auto slashedPackedLocation = replaceDots(packageLocation);
+	auto slashedPackedLocation = pathFromJavaPackagePath(packageLocation);
 
 	std::string command = "mkdir " + dir + " && cd " + dir + " && touch compile.sh build.sh && chmod 711 compile.sh build.sh && mkdir -p "
-							+ slashedPackedLocation;// + " && touch Main.java";
+							+ slashedPackedLocation;
 	std::clog << command << '\n';
-	int trash = system(command.c_str());
+	system(command.c_str());
 
 	command = dir + "/" + slashedPackedLocation + "/Main.java";
 	std::clog << command << '\n';
@@ -29,6 +23,9 @@ void javaCreation(std::string dir, bool maven){
 	file.close();
 
 	if (!maven) {
+		std::string compile_command = "javac --release 11 -Werror -d ./debug ";
+		std::cout << compile_command << '\n';
+
 		command = dir + "/compile.sh";
 		std::clog << command << '\n';
 		file.open(command, std::ios::out);
@@ -44,12 +41,10 @@ void javaCreation(std::string dir, bool maven){
 	else {
 		command = "mkdir -p " + dir + "/src/main/java && mv " + dir + "/" + slashedPackedLocation.substr(0, slashedPackedLocation.find_first_of("/")) 
 				+ " " + dir + "/src/main/java && chmod 666 " + dir + "/src/main/java/" + slashedPackedLocation + "/Main.java";
-		std::clog << ORANGE << command << NORM << std::endl;
-		// std::clog << command << '\n';
-		compile_command = "mvnw install\nmvnw compile\n";
+		std::clog << command << std::endl;
+		// std::clog << ORANGE << command << NORM << std::endl;
 
-		int trash = system(command.c_str());
-		slashedPackedLocation = "src/main/java/" + slashedPackedLocation;
+		system(command.c_str());
 
 		command = dir + "/pom.xml";
 		std::clog << command << '\n';
@@ -92,27 +87,10 @@ void javaCreation(std::string dir, bool maven){
 	}
 }
 
-std::string shellInit()
+std::string pathFromJavaPackagePath(const std::string &packagePath)
 {
-	return std::string("#!") +  getenv("SHELL");
-}
-
-std::string replaceDots(const std::string &packagePath)
-{
-	auto copy = packagePath;
-	for(auto &letter : copy)
-	{
-		if (letter == '.')
-			letter = '/';
-	}
+	std::string copy = packagePath;
+	std::replace_copy_if(packagePath.begin(), packagePath.end(), copy.begin(), [](const char c){ return c == '.'; }, '/');
 	return copy;
 }
 
-
-void printArgumets(char **argv, int size)
-{
-	int i = 0;
-	for ( ; i < size; i++) {
-		std::clog << "Argument " << i << ": " << argv[i] << '\n';
-	}
-}

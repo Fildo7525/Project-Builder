@@ -1,7 +1,7 @@
 #include "../include/Header.h"
 #include <iostream>
 
-void cppCreation(const std::string& dir, const flags &languageFlags){
+void makeCppProject(const std::string& dir, const flags &languageFlags){
 	std::string command = "mkdir " + dir + " && cd " + dir + " && touch main.cpp build.sh compile.sh CMakeLists.txt && mkdir cmake-build && chmod +x build.sh compile.sh";
 	system(command.c_str());
 

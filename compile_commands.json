@@ -1,17 +1,22 @@
 [
 {
   "directory": "/home/fildo7525/Documents/sourcing/Project-Builder/build",
-  "command": "/usr/bin/c++      -o CMakeFiles/buildProject.dir/src/cpp.cpp.o -c /home/fildo7525/Documents/sourcing/Project-Builder/src/cpp.cpp",
+  "command": "/usr/bin/g++   -I/home/fildo7525/Documents/sourcing/Project-Builder/include  -O3 -DNDEBUG   -std=gnu++17 -o CMakeFiles/buildProject.dir/main.cpp.o -c /home/fildo7525/Documents/sourcing/Project-Builder/main.cpp",
+  "file": "/home/fildo7525/Documents/sourcing/Project-Builder/main.cpp"
+},
+{
+  "directory": "/home/fildo7525/Documents/sourcing/Project-Builder/build",
+  "command": "/usr/bin/g++   -I/home/fildo7525/Documents/sourcing/Project-Builder/include  -O3 -DNDEBUG   -std=gnu++17 -o CMakeFiles/buildProject.dir/src/core.cpp.o -c /home/fildo7525/Documents/sourcing/Project-Builder/src/core.cpp",
+  "file": "/home/fildo7525/Documents/sourcing/Project-Builder/src/core.cpp"
+},
+{
+  "directory": "/home/fildo7525/Documents/sourcing/Project-Builder/build",
+  "command": "/usr/bin/g++   -I/home/fildo7525/Documents/sourcing/Project-Builder/include  -O3 -DNDEBUG   -std=gnu++17 -o CMakeFiles/buildProject.dir/src/cpp.cpp.o -c /home/fildo7525/Documents/sourcing/Project-Builder/src/cpp.cpp",
   "file": "/home/fildo7525/Documents/sourcing/Project-Builder/src/cpp.cpp"
 },
 {
   "directory": "/home/fildo7525/Documents/sourcing/Project-Builder/build",
-  "command": "/usr/bin/c++      -o CMakeFiles/buildProject.dir/src/java.cpp.o -c /home/fildo7525/Documents/sourcing/Project-Builder/src/java.cpp",
+  "command": "/usr/bin/g++   -I/home/fildo7525/Documents/sourcing/Project-Builder/include  -O3 -DNDEBUG   -std=gnu++17 -o CMakeFiles/buildProject.dir/src/java.cpp.o -c /home/fildo7525/Documents/sourcing/Project-Builder/src/java.cpp",
   "file": "/home/fildo7525/Documents/sourcing/Project-Builder/src/java.cpp"
-},
-{
-  "directory": "/home/fildo7525/Documents/sourcing/Project-Builder/build",
-  "command": "/usr/bin/c++      -o CMakeFiles/buildProject.dir/main.cpp.o -c /home/fildo7525/Documents/sourcing/Project-Builder/main.cpp",
-  "file": "/home/fildo7525/Documents/sourcing/Project-Builder/main.cpp"
 }
 ]
