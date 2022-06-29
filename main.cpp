@@ -1,5 +1,4 @@
-#include "core.h"
-#include "include/Header.h"
+#include "Header.h"
 
 int main(int argc, char ** argv)
 {
@@ -8,26 +7,15 @@ int main(int argc, char ** argv)
 		return 0;
 	}
 
-	flags opts = deduceFlagOptions(argc, argv);
-
-	int projectNameIdx = 2;
+	auto [opts, projectName] = deduceFlagOptions(argc, argv);
 
 	if (opts.lang == flags::language::java) {
-		if (opts.maven) {
-			projectNameIdx++;
-		}
-		std::clog << "Initialising javaCreation with index " << projectNameIdx << "\n";
-		makeJavaProject(argv[projectNameIdx], opts);
+		std::clog << "Initialising makeJavaProject with " << projectName << "\n";
+		makeJavaProject(projectName, opts);
 	}
 	else if (opts.lang == flags::language::cpp) {
-		if (opts.qt) {
-			projectNameIdx++;
-		}
-		if (opts.openCV) {
-			projectNameIdx++;
-			std::clog << "Argument 3 OpenCV: " << argv[projectNameIdx] << '\n';
-		}
-		makeCppProject(argv[projectNameIdx], opts);
+		std::clog << "Initialising makeCppProject with " << projectName << "\n";
+		makeCppProject(projectName, opts);
 	}
 	else {
 		std::cerr << "Filetype does not exist\n";
