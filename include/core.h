@@ -31,9 +31,9 @@ std::string shellInit();
  *
  * @param argc Number of commandline arguments.
  * @param argv Commandline arguments.
- * @return Generated flags.
+ * @return Pair of generated flags from commandline optoins and a project name..
  */
-flags deduceFlagOptions(int argc, char **argv);
+std::pair<flags, std::string> deduceFlagOptions(int argc, char **argv);
 
 /**
  * @class indent
