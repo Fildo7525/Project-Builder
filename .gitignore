@@ -4,3 +4,7 @@ build/
 buildProject
 .clang-format
 
+build.sh
+compile.sh
+compile_commands.json
+
