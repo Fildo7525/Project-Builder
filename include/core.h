@@ -6,6 +6,8 @@
 #include <iostream>
 #include <string>
 
+#define INITIALIZE_DIR_ERROR "Directory could not be initialized. It already exists."
+
 /**
  * @brief Prints help to the console.
  *
@@ -22,7 +24,15 @@ std::ostream &printHelp(std::ostream &os = std::cerr);
 void printArgumets(char **argv, int size);
 
 /**
- * @brief Get actual type of your shell.
+ * @brief Executes the supplied command. If the command failes the errorMessage will be printed.
+ *
+ * @param command Command to execute.
+ * @param errorMessage Error message to be printed in case of an error.
+ */
+void executeCommand(const std::string &command, const std::string &errorMessage = "");
+
+/**
+ * @brief Get the initialization line of current shell type.
  */
 std::string shellInit();
 

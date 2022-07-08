@@ -9,8 +9,7 @@ void makeJavaProject(const std::string &dir, const flags &languageFlags)
 
 	std::string command = "mkdir " + dir + " && cd " + dir + " && touch compile.sh build.sh && chmod 711 compile.sh build.sh && mkdir -p "
 							+ slashedPackedLocation;
-	std::clog << command << '\n';
-	system(command.c_str());
+	executeCommand(command, INITIALIZE_DIR_ERROR);
 
 	generateMainFile(dir, slashedPackedLocation, slashedPackedLocation);
 
@@ -21,7 +20,7 @@ void makeJavaProject(const std::string &dir, const flags &languageFlags)
 				+ " " + dir + "/src/main/java && chmod 666 " + dir + "/src/main/java/" + slashedPackedLocation + "/Main.java";
 		std::clog << command << std::endl;
 
-		system(command.c_str());
+		executeCommand(command);
 
 		generatePomXML(dir, packageLocation);
 	}

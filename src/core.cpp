@@ -1,6 +1,8 @@
 #include "core.h"
 
+#include <cstdlib>
 #include <iostream>
+
 #include <unistd.h>
 #include <getopt.h>
 
@@ -18,6 +20,14 @@ void printArgumets(char **argv, int size)
 	int i = 0;
 	for ( ; i < size; i++) {
 		std::clog << "Argument " << i << ": " << argv[i] << '\n';
+	}
+}
+
+void executeCommand(const std::string &command, const std::string &errorMessage)
+{
+	if (system(command.c_str()) != 0) {
+		std::cerr << errorMessage << std::endl;
+		exit(1);
 	}
 }
 

@@ -8,9 +8,10 @@
 #include <iostream>
 #include <string>
 
-void makeCppProject(const std::string &dir, const flags &languageFlags){
-	std::string command = "mkdir " + dir + " && cd " + dir + " && touch main.cpp build.sh compile.sh CMakeLists.txt && mkdir cmake-build && chmod +x build.sh compile.sh";
-	system(command.c_str());
+void makeCppProject(const std::string &dir, const flags &languageFlags)
+{
+	std::string command = "mkdir " + dir + " && cd " + dir + " && touch main.cpp build.sh compile.sh CMakeLists.txt && chmod +x build.sh compile.sh";
+	executeCommand(command, INITIALIZE_DIR_ERROR);
 
 	generateMainFile(dir, languageFlags);
 
@@ -21,12 +22,13 @@ void makeCppProject(const std::string &dir, const flags &languageFlags){
 	generateBuildFiles(dir);
 
 	command = "cd " + dir + " && cmake CMakeLists.txt -S . -B ./build && cp ./build/compile_commands.json .";
-	system(command.c_str());
+	executeCommand(command);
 }
 
 std::string cmakeVersion()
 {
-	system("cmake --version | grep version >> cmake_version.txt");
+	executeCommand("cmake --version | grep version >> cmake_version.txt","Cmake version could not be detected. Either cmake or grep is not installed on the executeCommand.");
+
 	std::fstream cmakeVersionFile("cmake_version.txt", std::ios::in);
 	std::string version;
 
@@ -35,7 +37,7 @@ std::string cmakeVersion()
 	version = version.substr(beginPos);
 	cmakeVersionFile.close();
 
-	system("rm -f cmake_version.txt");
+	executeCommand("rm -f cmake_version.txt");
 
 	return version;
 }
@@ -47,9 +49,9 @@ void generateMainFile(const std::string &dir, const flags &languageFlags)
 
 	std::fstream file(command, std::ios::out);
 	if (languageFlags.qt)
-		file << "#include <QCoreApplication>\n";
+		file << "\\\\ QT include files\n#include <QCoreApplication>\n\n";
 	if (languageFlags.openCV)
-		file << "#include <opencv2/highgui.hpp>\n";
+		file << "\\\\ OpenCV include files\n#include <opencv2/highgui.hpp>\n\n";
 
 	file << "#include \"" << dir << ".h\"\n\nint main(int argc, char *argv[])\n{\n"
 				<< (languageFlags.qt ? "\tQCoreApplication a(argc, argv);\n" : "")
@@ -78,10 +80,9 @@ void generateCmakeFile(const std::string &dir, const flags &languageFlags)
 {
 	indent tabs;
 
-	std::string command;
-	command = dir + "/CMakeLists.txt";
-	std::fstream file(command, std::ios::out);
-	std::cout << "\n\nCMAKE command: " << command << std::endl;
+	std::string fileName;
+	fileName = dir + "/CMakeLists.txt";
+	std::fstream file(fileName, std::ios::out);
 
 	file << "cmake_minimum_required(VERSION " << cmakeVersion() << ")\n"
 		<< "project(" << dir << " VERSION " << cmakeVersion() << ")\n\n"
@@ -131,18 +132,19 @@ void generateCmakeFile(const std::string &dir, const flags &languageFlags)
 void generateBuildFiles(const std::string &dir)
 {
 	indent tabs;
-	std::string command = dir + "/build.sh";
-	std::fstream file(command, std::ios::out);
-	file << "#!" << shellInit()
+	std::string fileName = dir + "/build.sh";
+	std::fstream file(fileName, std::ios::out);
+
+	file << shellInit()
 		<< "\ncd build/\nmake -j16\nif [ $? -eq 0 ];then\n" 
 			<< tabs.up()() << "clear\n"
 			<< tabs() << "./" << dir
 		<< "\nfi\n" << std::endl;
 	file.close();
 
-	command = dir + "/compile.sh";
-	file.open(command, std::ios::out);
-	file << "#!" << shellInit()
+	fileName = dir + "/compile.sh";
+	file.open(fileName, std::ios::out);
+	file << shellInit()
 		 << "\n\nclear\ncd build/\nmake -j16\n" << std::endl;
 	file.close();
 }
