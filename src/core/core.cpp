@@ -53,7 +53,6 @@ std::pair<flags, std::string> deduceFlagOptions(int argc, char **argv)
 		switch(option){
 			case 't': {
 				std::string projectType = optarg;
-				std::cout << "option t with argument: " << projectType << '\n' << std::endl;
 
 				if(opts.typeFlag)
 					std::cerr << RED << "Not allowed for multiple languages\n" << NORM << std::ends, exit(1);
@@ -71,18 +70,14 @@ std::pair<flags, std::string> deduceFlagOptions(int argc, char **argv)
 			}
 
 			case 'q':
-				std::cout << "option q " << '\n' << std::endl;
 				opts.qt = true;
 				break;
 
 			case 'c':
-				std::cout << "option c " << '\n' << std::endl;
 				opts.openCV = true;
 				break;
 
 			case 'm':
-				std::cout << "option m " << '\n' << std::endl;
-				// std::cout << "setting m to true\n";
 				opts.maven = true;
 				break;
 

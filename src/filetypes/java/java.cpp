@@ -1,4 +1,4 @@
-#include "Header.h"
+#include "BuildProject.h"
 
 void makeJavaProject(const std::string &dir, const flags &languageFlags)
 {
@@ -13,7 +13,7 @@ void makeJavaProject(const std::string &dir, const flags &languageFlags)
 	generateBuildFiles(dir, slashedPackedLocation, packageLocation, languageFlags.maven);
 
 	if (languageFlags.maven) {
-		command = "mkdir -p " + dir + "/src/main/java && mv " + dir + "/" + slashedPackedLocation.substr(0, slashedPackedLocation.find_first_of("/")) 
+		command = "mkdir -p " + dir + "/src/main/java && mv " + dir + "/" + slashedPackedLocation.substr(0, slashedPackedLocation.find_first_of("/"))
 				+ " " + dir + "/src/main/java && chmod 666 " + dir + "/src/main/java/" + slashedPackedLocation + "/Main.java";
 
 		executeCommand(command);

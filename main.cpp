@@ -1,4 +1,4 @@
-#include "Header.h"
+#include "BuildProject.h"
 
 int main(int argc, char ** argv)
 {
@@ -11,11 +11,9 @@ int main(int argc, char ** argv)
 
 	switch (opts.lang) {
 		case flags::language::cpp:
-			std::clog << "Initialising makeCppProject with " << projectName << "\n";
 			makeCppProject(projectName, opts);
 			break;
 		case flags::language::java:
-			std::clog << "Initialising makeJavaProject with " << projectName << "\n";
 			makeJavaProject(projectName, opts);
 			break;
 		default:

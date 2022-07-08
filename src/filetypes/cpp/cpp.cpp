@@ -1,4 +1,4 @@
-#include "Header.h"
+#include "BuildProject.h"
 
 void makeCppProject(const std::string &dir, const flags &languageFlags)
 {
@@ -41,9 +41,9 @@ void generateMainFile(const std::string &dir, const flags &languageFlags)
 
 	std::fstream file(command, std::ios::out);
 	if (languageFlags.qt)
-		file << "\\\\ QT include files\n#include <QCoreApplication>\n\n";
+		file << "// QT include files\n#include <QCoreApplication>\n\n";
 	if (languageFlags.openCV)
-		file << "\\\\ OpenCV include files\n#include <opencv2/highgui.hpp>\n\n";
+		file << "// OpenCV include files\n#include <opencv2/highgui.hpp>\n\n";
 
 	file << "#include \"" << dir << ".h\"\n\nint main(int argc, char *argv[])\n{\n"
 				<< (languageFlags.qt ? "\tQCoreApplication a(argc, argv);\n" : "")
