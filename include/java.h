@@ -1,6 +1,7 @@
 #pragma once
 
 #include "flags.h"
+
 #include <string>
 
 /**

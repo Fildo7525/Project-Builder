@@ -1,12 +1,4 @@
 #include "Header.h"
-#include "core.h"
-
-#include <algorithm>
-#include <cstdlib>
-#include <fstream>
-#include <ios>
-#include <iostream>
-#include <string>
 
 void makeCppProject(const std::string &dir, const flags &languageFlags)
 {

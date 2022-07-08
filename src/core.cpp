@@ -1,8 +1,5 @@
 #include "core.h"
 
-#include <cstdlib>
-#include <iostream>
-
 #include <unistd.h>
 #include <getopt.h>
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "flags.h"
 #include "colors.h"
+#include "flags.h"
 
 #include <iostream>
 #include <string>

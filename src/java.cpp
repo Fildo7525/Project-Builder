@@ -1,7 +1,4 @@
-#include "../include/Header.h"
-#include "core.h"
-#include <string>
-
+#include "Header.h"
 
 void makeJavaProject(const std::string &dir, const flags &languageFlags)
 {
