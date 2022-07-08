@@ -8,14 +8,13 @@ void makeJavaProject(const std::string &dir, const flags &languageFlags)
 							+ slashedPackedLocation;
 	executeCommand(command, INITIALIZE_DIR_ERROR);
 
-	generateMainFile(dir, slashedPackedLocation, slashedPackedLocation);
+	generateMainFile(dir, slashedPackedLocation, packageLocation);
 
 	generateBuildFiles(dir, slashedPackedLocation, packageLocation, languageFlags.maven);
 
 	if (languageFlags.maven) {
 		command = "mkdir -p " + dir + "/src/main/java && mv " + dir + "/" + slashedPackedLocation.substr(0, slashedPackedLocation.find_first_of("/")) 
 				+ " " + dir + "/src/main/java && chmod 666 " + dir + "/src/main/java/" + slashedPackedLocation + "/Main.java";
-		std::clog << command << std::endl;
 
 		executeCommand(command);
 
@@ -34,7 +33,7 @@ std::pair<std::string, std::string> linuxAndJavaPaths()
 {
 	std::string packageLocation;
 
-	std::cout << "Enter the package name (com.example)[enter for default]: ";
+	std::cout << "Enter the package name e.g. com.example (default): ";
 	std::getline(std::cin, packageLocation);
 	if (packageLocation.empty())
 		packageLocation = DEFAULT_PACKAGE_LOCATION;
@@ -45,21 +44,20 @@ std::pair<std::string, std::string> linuxAndJavaPaths()
 
 void generateMainFile(const std::string &dir, const std::string &slashedPackedLocation, const std::string &packageLocation)
 {
-	std::string command = dir + "/" + slashedPackedLocation + "/Main.java";
-	std::clog << command << '\n';
-	std::fstream file(command, std::ios::out);
-	file << "package " << packageLocation << ";\n\npublic class Main {\n\tpublic static void main(String args[]){\n\t\tSystem.out.println(\"Hallo World!\");\n\t}\n}" << std::endl;
+	std::string fileName = dir + "/" + slashedPackedLocation + "/Main.java";
+
+	std::fstream file(fileName, std::ios::out);
+	file << "package " << packageLocation << ";\n\npublic class Main {\n\tpublic static void main(String args[]) {\n\t\tSystem.out.println(\"Hallo World!\");\n\t}\n}" << std::endl;
 	file.close();
 }
 
 void generatePomXML(const std::string &dir, const std::string &packageLocation)
 {
-	std::string command = dir + "/pom.xml";
-	std::clog << command << '\n';
+	std::string fileName = dir + "/pom.xml";
 	indent tabs;
 	tabs.up().up();
 
-	std::fstream file(command, std::ios::out);
+	std::fstream file(fileName, std::ios::out);
 	file << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
 		 << "<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\n"
 				<< tabs() << "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
@@ -81,31 +79,31 @@ void generatePomXML(const std::string &dir, const std::string &packageLocation)
 void generateBuildFiles(const std::string &dir, const std::string &slashedPackedLocation, const std::string &packageLocation, bool maven)
 {
 	std::string compile_command = "javac --release 11 -Werror -d ./debug ";
-	std::cout << compile_command << '\n';
 
-	std::string command = dir + "/compile.sh";
-	std::clog << command << '\n';
-	std::fstream file(command, std::ios::out);
+	std::string fileName = dir + "/compile.sh";
+
+	std::fstream file(fileName, std::ios::out);
+	file << shellInit() << '\n';
+
 	if (!maven) {
-		file << compile_command << slashedPackedLocation << "/Main.java" << std::ends;
+		file << compile_command << slashedPackedLocation << "/Main.java\n" << std::endl;
 	}
 	else {
-		file << shellInit() << '\n'
-			<< "mvn clean install\n"
-			<< "# mvn dependency:\n" << std::endl;
+		file << "mvn clean install\n" << std::endl;
 	}
 	file.close();
 
-	command = dir + "/build.sh";
-	std::clog << command << '\n';
-	file.open(command, std::ios::out);
+	fileName = dir + "/build.sh";
+
+	file.open(fileName, std::ios::out);
+	file << shellInit() << '\n';
+
 	if (!maven) {
-		file << compile_command << slashedPackedLocation << "/Main.java;\nif [ $? -eq 0 ]\nthen\n\tcd ./debug && java " << slashedPackedLocation << "/Main\nelse\n\trm -r *.class\nfi" << std::endl;
+		file << compile_command << slashedPackedLocation << "/Main.java;\n"
+			<< "if [ $? -eq 0 ]\nthen\n\tcd ./debug && java " << slashedPackedLocation << "/Main\nelse\n\trm -r *.class\nfi" << std::endl;
 	}
 	else {
-		file << shellInit() << '\n'
-			<< "mvn clean install\n"
-			<< "# mvn dependency:\n"
+		file << "mvn clean install\n"
 			<< "if [[ $? == 0 ]]; then\n"
 			<< "\tclear\n\tjava -Dfile.encoding=UTF-8 -cp ./target/classes " << packageLocation << ".Main\n"
 			<< "fi" << std::endl;
