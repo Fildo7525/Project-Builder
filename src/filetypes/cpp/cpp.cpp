@@ -2,7 +2,8 @@
 
 void makeCppProject(const std::string &dir, const flags &languageFlags)
 {
-	std::string command = "mkdir " + dir + " && cd " + dir + " && touch main.cpp build.sh compile.sh CMakeLists.txt && chmod +x build.sh compile.sh";
+	std::string command = "mkdir -p " + dir + "/src && cd " + dir + " && touch src/" + dir + ".cpp src/" + dir + ".h src/CMakeLists.txt build.sh compile.sh && chmod +x build.sh compile.sh";
+	std::cout << command << std::endl;
 	executeCommand(command, INITIALIZE_DIR_ERROR);
 
 	generateMainFile(dir, languageFlags);
@@ -19,7 +20,8 @@ void makeCppProject(const std::string &dir, const flags &languageFlags)
 
 std::string cmakeVersion()
 {
-	executeCommand("cmake --version | grep version >> cmake_version.txt","Cmake version could not be detected. Either cmake or grep is not installed on the executeCommand.");
+	executeCommand("cmake --version | grep version >> cmake_version.txt",
+					"Cmake version could not be detected. Either cmake or grep is not installed on the executeCommand.");
 
 	std::fstream cmakeVersionFile("cmake_version.txt", std::ios::in);
 	std::string version;
@@ -57,14 +59,27 @@ void generateMainFile(const std::string &dir, const flags &languageFlags)
 
 void generateDirectoryNamedFiles(const std::string &dir)
 {
-	std::string command = dir + "/" + dir + ".h";
-	std::fstream file(command, std::ios::out);
-	file << "#pragma once\n\n#include <iostream>\n" << std::endl;
+	std::string fileName = dir + "/src/" + dir + ".h";
+	std::fstream file(fileName, std::ios::out);
+	indent tabs;
+
+	file << "#pragma once\n\n"
+		 << "#include <iostream>\n\n"
+		 << "class " << dir << '\n'
+		 << "{\n"
+		 << "public:"
+		 << tabs.up()() << dir << "() = default;\n"
+		 << "};\n" << std::endl;
 	file.close();
 
-	command = dir + "/" + dir + ".cpp";
-	file.open(command, std::ios::out);
+	fileName = dir + "/src/" + dir + ".cpp";
+	file.open(fileName, std::ios::out);
 	file << "#include \"" << dir << ".h\"\n" << std::endl;
+	file.close();
+
+	file.open(dir + "/src/CMakeLists.txt");
+	file << "add_library(lib)\n\n"
+		 << "target_include_directories(lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})\n" << std::endl;
 	file.close();
 }
 
@@ -100,14 +115,18 @@ void generateCmakeFile(const std::string &dir, const flags &languageFlags)
 
 	file << "set(SOURCES\n"
 			<< tabs.up()() << "main.cpp\n"
-			<< tabs() << dir << ".cpp\n)\n"
+			<< ")\n"
 		<< "set(HEADERS\n"
-			<< tabs() << dir << ".h\n)\n\n"
+			<< ")\n\n"
+
+		<< "add_subdirectory(src)\n\n"
 
 		<< "add_executable(${PROJECT_NAME}\n"
 			<< tabs() << "${SOURCES}\n"
-			<< tabs() << "\t${HEADERS}\n"
-		<< ")\n\n";
+			<< tabs() << "${HEADERS}\n"
+		<< ")\n\n"
+
+	 	<< "target_link_libraries(${PROJECT_NAME} PUBLIC lib)\n\n";
 
 	if (languageFlags.qt) {
 		file << "target_link_libraries(${PROJECT_NAME} PUBLIC Qt5::Widgets)\n"
