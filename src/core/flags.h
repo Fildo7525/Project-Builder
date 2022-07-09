@@ -25,8 +25,12 @@ struct flags
 
 	// Indicates if a language is set.
 	bool typeFlag;
+
 	// True if an error occured.
 	bool err;
+
+	// True if help/h flag specified. In this case all other flags are ignored.
+	bool help;
 
 	/**
 	 * @brief Constructor
@@ -37,6 +41,7 @@ struct flags
 	, openCV(false)
 	, maven(false)
 	, typeFlag(false)
-	, err(false) { }
+	, err(false)
+	, help(false) { }
 };
 
