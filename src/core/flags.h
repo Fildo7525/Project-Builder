@@ -27,6 +27,8 @@ struct flags
 	// True if an error occured.
 	bool err;
 
+	bool useGit;
+
 	// True if help/h flag specified. In this case all other flags are ignored.
 	bool help;
 
@@ -39,6 +41,7 @@ struct flags
 	, openCV(false)
 	, maven(false)
 	, err(false)
+	, useGit(true)
 	, help(false) { }
 };
 

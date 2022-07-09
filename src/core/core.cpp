@@ -9,7 +9,11 @@ std::ostream &printHelp(std::ostream &os)
 	return os << tabs.up()() << "~ Help for Project-Builder ~\n\n"
 			  << "Command execution:\n"
 			  << tabs() << "buildProject <projectname> --type/-t <language> [options]\n\n"
-			  << tabs() << "--help -h\tto print this help\n\n"
+
+			  << tabs() << "--help -h\tPrint this help\n"
+			  << tabs() << "--no-git -g\tProhibit default git repozitory initialization\n"
+			  << tabs() << "--type -t\tDefine project language\n\n"
+
 			  << tabs() << "supported languages:\n"
 			  << tabs.up()() << "cpp:\t--type c / cpp / c++\n"
 			  << tabs()		 << "java:\t--type j / java\n\n" << tabs.down()()
@@ -53,11 +57,12 @@ std::pair<flags, std::string> deduceFlagOptions(int argc, char **argv)
 		{"qt5",		no_argument,	   0, 'q'},
 		{"maven",	no_argument,	   0, 'm'},
 		{"opencv",	no_argument,	   0, 'c'},
+		{"no-git",	no_argument,	   0, 'g'},
 		{"help"	,	no_argument,	   0, 'h'},
 		{0,			0,				   0,  0 }
 	};
 
-	while((option = getopt_long(argc, argv,"t:qmch", long_options, &false_option)) != -1){
+	while((option = getopt_long(argc, argv,"t:qmcgh", long_options, &false_option)) != -1){
 		std::string newDir(argv[1]);
 
 		switch(option){
@@ -89,6 +94,10 @@ std::pair<flags, std::string> deduceFlagOptions(int argc, char **argv)
 
 			case 'c':
 				opts.openCV = true;
+				break;
+
+			case 'g':
+				opts.useGit = false;
 				break;
 
 			case 'h':
