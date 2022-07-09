@@ -9,6 +9,11 @@ int main(int argc, char ** argv)
 
 	auto [opts, projectName] = deduceFlagOptions(argc, argv);
 
+	if (opts.help) {
+		printHelp(std::cout);
+		return 0;
+	}
+
 	switch (opts.lang) {
 		case flags::language::cpp:
 			makeCppProject(projectName, opts);

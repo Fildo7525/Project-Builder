@@ -5,10 +5,19 @@
 
 std::ostream &printHelp(std::ostream &os)
 {
-	return os << "The snippert is incorrect. Use it as\n\nbuildProject <projectname> --type/-t <language> [options]\n\n"
-				<< "\tsupported languages:\n\t\tcpp:\t--type c / cpp / c++\n\t\tjava:\t--type j / java\n\n"
-				<< "\toptions for C++:\n\t\tQT5:\t--qt5 / -q\n\t\tOpenCV:\t--opencv / -c\n"
-				<< "\toptions for Java:\n\t\tMaven:\t--maven / -m"
+	indent tabs;
+	return os << tabs.up()() << "~ Help for Project-Builder ~\n\n"
+			  << "Command execution:\n"
+			  << tabs() << "buildProject <projectname> --type/-t <language> [options]\n\n"
+			  << tabs() << "--help -h\tto print this help\n\n"
+			  << tabs() << "supported languages:\n"
+			  << tabs.up()() << "cpp:\t--type c / cpp / c++\n"
+			  << tabs()		 << "java:\t--type j / java\n\n" << tabs.down()()
+			  << "options for C++:\n"
+			  << tabs.up()() << "QT5:\t--qt5 / -q\n"
+			  << tabs()		 << "OpenCV:\t--opencv / -c\n" << tabs.down()()
+			  << "options for Java:\n"
+			  << tabs.up()() << "Maven:\t--maven / -m"
 	<< std::endl;
 }
 
@@ -44,11 +53,12 @@ std::pair<flags, std::string> deduceFlagOptions(int argc, char **argv)
 		{"qt5",		no_argument,	   0, 'q'},
 		{"maven",	no_argument,	   0, 'm'},
 		{"opencv",	no_argument,	   0, 'c'},
+		{"help"	,	no_argument,	   0, 'h'},
 		{0,			0,				   0,  0 }
 	};
 
-	while((option = getopt_long(argc, argv,"qcmt:", long_options, &false_option)) != -1){
-		std::string newDir(argv[0]);
+	while((option = getopt_long(argc, argv,"t:qmch", long_options, &false_option)) != -1){
+		std::string newDir(argv[1]);
 
 		switch(option){
 			case 't': {
@@ -57,9 +67,9 @@ std::pair<flags, std::string> deduceFlagOptions(int argc, char **argv)
 				if(opts.typeFlag)
 					std::cerr << RED << "Not allowed for multiple languages\n" << NORM << std::ends, exit(1);
 				if(newDir.find("-") == 0) {
-					std::cerr << RED << "Directory must be specified as a second argument buildProject [projectname] <-t language>\n"
-							<< "Options:\n\t-q QT5 included (C++)\n\t-c OpenCV includec (C++)\n\t-m maven build system (Java)\n\n"
-							<< "if language is not specified in particular option than it's ignored"<< NORM << std::endl, exit(2);
+					std::cerr << RED << "Directory must be specified as a second argument.\n" << NORM << std::endl;
+					printHelp();
+					exit(2);
 				}
 
 				if(projectType == "java" || projectType == "j")
@@ -73,12 +83,16 @@ std::pair<flags, std::string> deduceFlagOptions(int argc, char **argv)
 				opts.qt = true;
 				break;
 
+			case 'm':
+				opts.maven = true;
+				break;
+
 			case 'c':
 				opts.openCV = true;
 				break;
 
-			case 'm':
-				opts.maven = true;
+			case 'h':
+				opts.help = true;
 				break;
 
 			default:
