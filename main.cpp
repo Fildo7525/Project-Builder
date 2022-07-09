@@ -22,7 +22,7 @@ int main(int argc, char ** argv)
 			makeJavaProject(projectName, opts);
 			break;
 		default:
-			std::cerr << "Filetype does not exist\n";
+			error("Filetype does not exist\n");
 			printHelp();
 			return 1;
 	}

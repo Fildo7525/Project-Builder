@@ -16,6 +16,14 @@
 std::ostream &printHelp(std::ostream &os = std::cerr);
 
 /**
+ * @brief Prints red error message to the console to std::cerr stream.
+ * This funciton adds new line automaicly to the end of the message.
+ *
+ * @param msg Message to be displaied.
+ */
+void error(const std::string &msg);
+
+/**
  * @brief Prints arguments to the console.
  *
  * @param argv Args to be printed.
