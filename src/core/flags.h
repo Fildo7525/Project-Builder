@@ -12,6 +12,7 @@ struct flags
 	{
 		java,
 		cpp,
+		none,
 	};
 
 	language lang;
@@ -36,7 +37,7 @@ struct flags
 	 * @brief Constructor
 	 */
 	flags()
-	: lang()
+	: lang(language::none)
 	, qt(false)
 	, openCV(false)
 	, maven(false)
