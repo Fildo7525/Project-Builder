@@ -20,6 +20,8 @@ example:
 
     buildProject MyProject --type cpp --qt5
 
+To see more detailed usage read README.md or run `buildProject --help`.
+
 ## Supported languages
 
 Currently supported these language options:

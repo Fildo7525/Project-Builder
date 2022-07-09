@@ -27,6 +27,10 @@ int main(int argc, char ** argv)
 			return 1;
 	}
 
+	if (opts.useGit) {
+		executeCommand("cd " + projectName + " && git init");
+	}
+
 	return 0;
 }
 
