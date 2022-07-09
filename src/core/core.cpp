@@ -25,6 +25,11 @@ std::ostream &printHelp(std::ostream &os)
 	<< std::endl;
 }
 
+void error(const std::string &msg)
+{
+	std::cerr << RED << msg << NORM << std::endl;
+}
+
 void printArgumets(char **argv, int size)
 {
 	int i = 0;
@@ -36,7 +41,7 @@ void printArgumets(char **argv, int size)
 void executeCommand(const std::string &command, const std::string &errorMessage)
 {
 	if (system(command.c_str()) != 0) {
-		std::cerr << errorMessage << std::endl;
+		error(errorMessage);
 		exit(1);
 	}
 }
@@ -70,9 +75,9 @@ std::pair<flags, std::string> deduceFlagOptions(int argc, char **argv)
 				std::string projectType = optarg;
 
 				if(opts.lang != flags::language::none)
-					std::cerr << RED << "Not allowed for multiple languages\n" << NORM << std::ends, exit(1);
+					error("Not allowed for multiple languages"), exit(1);
 				if(newDir[0] == '-') {
-					std::cerr << RED << "Directory must be specified as a second argument.\n" << NORM << std::endl;
+					error("Directory must be specified as a second argument.\n");
 					printHelp();
 					exit(2);
 				}
