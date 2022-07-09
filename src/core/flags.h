@@ -24,9 +24,6 @@ struct flags
 	// Java flags
 	bool maven;
 
-	// Indicates if a language is set.
-	bool typeFlag;
-
 	// True if an error occured.
 	bool err;
 
@@ -41,7 +38,6 @@ struct flags
 	, qt(false)
 	, openCV(false)
 	, maven(false)
-	, typeFlag(false)
 	, err(false)
 	, help(false) { }
 };
