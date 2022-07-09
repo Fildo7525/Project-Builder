@@ -3,7 +3,6 @@
 void makeCppProject(const std::string &dir, const flags &languageFlags)
 {
 	std::string command = "mkdir -p " + dir + "/src && cd " + dir + " && touch src/" + dir + ".cpp src/" + dir + ".h src/CMakeLists.txt build.sh compile.sh && chmod +x build.sh compile.sh";
-	std::cout << command << std::endl;
 	executeCommand(command, INITIALIZE_DIR_ERROR);
 
 	generateMainFile(dir, languageFlags);

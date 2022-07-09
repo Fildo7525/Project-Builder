@@ -64,18 +64,18 @@ std::pair<flags, std::string> deduceFlagOptions(int argc, char **argv)
 			case 't': {
 				std::string projectType = optarg;
 
-				if(opts.typeFlag)
+				if(opts.lang != flags::language::none)
 					std::cerr << RED << "Not allowed for multiple languages\n" << NORM << std::ends, exit(1);
-				if(newDir.find("-") == 0) {
+				if(newDir[0] == '-') {
 					std::cerr << RED << "Directory must be specified as a second argument.\n" << NORM << std::endl;
 					printHelp();
 					exit(2);
 				}
 
 				if(projectType == "java" || projectType == "j")
-					opts.lang = flags::language::java, opts.typeFlag = true;
+					opts.lang = flags::language::java;
 				else if(projectType == "cpp" || projectType == "c++" || projectType == "c")
-					opts.lang = flags::language::cpp, opts.typeFlag = true;
+					opts.lang = flags::language::cpp;
 				break;
 			}
 
