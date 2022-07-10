@@ -14,21 +14,15 @@ int main(int argc, char ** argv)
 		return 0;
 	}
 
-	switch (opts.lang) {
-		case flags::language::cpp:
-			makeCppProject(projectName, opts);
-			break;
-		case flags::language::java:
-			makeJavaProject(projectName, opts);
-			break;
-		default:
-			error("Filetype does not exist\n");
-			printHelp();
-			return 1;
+	if (!projectName) {
+		error("Language is not supported by this program\n");
+		printHelp();
+		return 1;
 	}
 
+	projectName->generate();
 	if (opts.useGit) {
-		executeCommand("cd " + projectName + " && git init");
+		executeCommand("cd " + projectName->projectName() + " && git init");
 	}
 
 	return 0;

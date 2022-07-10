@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "core.h"
+#include "project.h"
 #include "java.h"
 #include "cpp.h"
 

@@ -1,4 +1,10 @@
 #include "core.h"
+#include "flags.h"
+#include "src/filetypes/cpp/cpp.h"
+#include "src/filetypes/java/java.h"
+
+#include <iostream>
+#include <memory>
 
 #include <unistd.h>
 #include <getopt.h>
@@ -41,6 +47,7 @@ void printArgumets(char **argv, int size)
 void executeCommand(const std::string &command, const std::string &errorMessage)
 {
 	if (system(command.c_str()) != 0) {
+		std::cerr << command << std::endl;
 		error(errorMessage);
 		exit(1);
 	}
@@ -51,11 +58,12 @@ std::string shellInit()
 	return std::string("#!") +  getenv("SHELL");
 }
 
-std::pair<flags, std::string> deduceFlagOptions(int argc, char **argv)
+std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(int argc, char **argv)
 {
 	flags opts;
 	int option;
 	int false_option = 0;
+	std::shared_ptr<Project> newProject(nullptr);
 
 	struct option long_options[] = {
 		{"type",	required_argument, 0, 't'},
@@ -67,10 +75,11 @@ std::pair<flags, std::string> deduceFlagOptions(int argc, char **argv)
 		{0,			0,				   0,  0 }
 	};
 
-	while((option = getopt_long(argc, argv,"t:qmcgh", long_options, &false_option)) != -1){
-		std::string newDir(argv[1]);
+	std::string newDir(argv[1]);
 
-		switch(option){
+	while((option = getopt_long(argc, argv,"t:qmcgh", long_options, &false_option)) != -1){
+
+		switch(option) {
 			case 't': {
 				std::string projectType = optarg;
 
@@ -116,7 +125,20 @@ std::pair<flags, std::string> deduceFlagOptions(int argc, char **argv)
 				std::perror("Getopt: "), opts.err = true;
 		}
 	}
-	return {opts, argv[argc-1]};
+
+	// printArgumets(argv, argc);
+
+	switch (opts.lang) {
+		case flags::language::cpp:
+			newProject.reset((Project*)new CppProject(newDir, opts));
+			break;
+		case flags::language::java:
+			newProject.reset((Project*)new JavaProject(newDir, opts));
+			break;
+		default:
+			newProject.reset();
+	}
+	return {opts, newProject};
 }
 
 std::string indent::operator()()

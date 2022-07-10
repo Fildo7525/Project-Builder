@@ -1,11 +1,13 @@
 set(HEADERS
 	cpp/cpp.h
 	java/java.h
+	template/project.h
 )
 
 set(SOURCES
 	cpp/cpp.cpp
 	java/java.cpp
+	template/project.cpp
 )
 
 add_library(filetypes ${SOURCES} ${HEADERS})
@@ -17,4 +19,5 @@ target_include_directories(
 PUBLIC
 	${CMAKE_CURRENT_SOURCE_DIR}/cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/java
+	${CMAKE_CURRENT_SOURCE_DIR}/template
 )

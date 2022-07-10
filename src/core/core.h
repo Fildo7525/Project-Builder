@@ -2,8 +2,10 @@
 
 #include "colors.h"
 #include "flags.h"
+#include "project.h"
 
 #include <iostream>
+#include <memory>
 #include <string>
 
 #define INITIALIZE_DIR_ERROR "Directory could not be initialized. It already exists."
@@ -51,7 +53,7 @@ std::string shellInit();
  * @param argv Commandline arguments.
  * @return Pair of generated flags from commandline optoins and a project name..
  */
-std::pair<flags, std::string> deduceFlagOptions(int argc, char **argv);
+std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(int argc, char **argv);
 
 /**
  * @class indent

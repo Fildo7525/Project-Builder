@@ -1,49 +1,46 @@
 #pragma once
 
-#include <string>
+#include "project.h"
 
-struct flags;
+class CppProject : private Project
+{
+public:
+	// Consturctor
+	CppProject(const std::string &directory, const flags &options);
 
-/**
- * @brief Function for creating cpp project.
- *
- * @param dir Direcotry where will the project be created.
- * @param languageFlags Flags for different options in the project.
- */
-void makeCppProject(const std::string &dir, const flags &languageFlags);
+	// Overriden funciton from Project class
+	void generate() override;
 
-/**
- * @brief Returns the cmake version in type of 3.16.3.
- */
-std::string cmakeVersion();
+private:
 
-/**
- * @brief Generates file main.cpp in the Direcotry dir with specified language options.
- *
- * @param dir Direcotry where to create the main.cpp file.
- * @param languageFlags Options for the main file creation.
- */
-void generateMainFile(const std::string &dir, const flags &languageFlags);
+	/**
+	 * @brief Function for creating cpp project.
+	 */
+	void makeCppProject();
 
-/**
- * @brief Create '${dir}.cpp' and '${dir}.h' files.
- *
- * @param dir Location and name of the created files.
- */
-void generateDirectoryNamedFiles(const std::string &dir);
+	/**
+	 * @brief Returns the cmake version in type of 3.16.3.
+	 */
+	std::string cmakeVersion();
 
-/**
- * @brief Create CMakeLists.txt file according to specified options.
- *
- * @param dir Direcotry where to create the file.
- * @param languageFlags Options for the file creation.
- */
-void generateCmakeFile(const std::string &dir, const flags &languageFlags);
+	/**
+	 * @brief Generates file main.cpp in the Direcotry dir with specified language options.
+	 */
+	void generateMainFile();
 
-/**
- * @brief Create build.sh and compile.sh files.
- *
- * @param dir Direcotry where to create the specified files.
- */
-void generateBuildFiles(const std::string &dir);
+	/**
+	 * @brief Create '${dir}.cpp' and '${dir}.h' files.
+	 */
+	void generateDirectoryNamedFiles();
+
+	/**
+	 * @brief Create CMakeLists.txt file according to specified options.
+	 */
+	void generateCmakeFile();
+
+	/**
+	 * @brief Create build.sh and compile.sh files.
+	 */
+	void generateBuildFiles();
+};
 
