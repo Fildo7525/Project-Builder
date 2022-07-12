@@ -9,7 +9,7 @@ int main(int argc, char ** argv)
 
 	auto [opts, projectName] = deduceFlagOptions(argc, argv);
 
-	if (opts.help) {
+	if (opts.help || opts.err) {
 		printHelp(std::cout);
 		return 0;
 	}

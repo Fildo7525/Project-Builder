@@ -74,8 +74,11 @@ std::pair<flags, std::string> deduceFlagOptions(int argc, char **argv)
 			case 't': {
 				std::string projectType = optarg;
 
-				if(opts.lang != flags::language::none)
-					error("Not allowed for multiple languages"), exit(1);
+				if(opts.lang != flags::language::none) {
+					error("Not allowed to create project for multiple languages");
+					printHelp();
+					exit(1);
+				}
 				if(newDir[0] == '-') {
 					error("Directory must be specified as a second argument.\n");
 					printHelp();
