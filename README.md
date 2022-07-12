@@ -1,6 +1,16 @@
 # Project-Builder
 
-This program is compatible with Linux
+This is a light weight project builder program that is compatible with Linux.
+
+## Table of contents
+ - [Compilation](#Compilation)
+ - [Usage](#Usage)
+ - [Supported languages](#supported-languages)
+    - [Cpp](#Cpp)
+    - [Java](#Java)
+ - [Neovim](#Neovim)
+ - [VS Code](#vs-code)
+ - [Updates](#Updates)
 
 ## Compilation
 
@@ -24,11 +34,13 @@ To see more detailed usage read README.md or run `buildProject --help`.
 
 ## Supported languages
 
+Note: to define a language use `--type / -t` flag and than specify language
+
 Currently supported these language options:
  | Language | Language flag |
  |  :----:  |     :---:     |
- | cpp      | cpp / c++ / c |
- | java     | java / j      |
+ | [cpp](#Cpp)      | cpp / c++ / c |
+ | [java](#Java)     | java / j      |
 
 Generates project folder with specified name in the argument
 
