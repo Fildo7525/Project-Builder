@@ -6,14 +6,20 @@
 
 #define DEFAULT_PACKAGE_LOCATION "com.example"
 
+/**
+ * @class JavaProject
+ * @brief Class creating java project.
+ */
 class JavaProject : private Project
 {
 public:
+	// Constructor
 	JavaProject(const std::string &dir, const flags &languageFlags)
 		: Project(dir, languageFlags)
 	{
 	}
 
+	// Overriden funciton from interface Project.
 	void generate() override;
 
 private:
@@ -44,9 +50,10 @@ private:
 	void generateBuildFiles();
 
 private:
-	std::string m_packagePath;
+	// Location of the package of Main.java in Java style.
 	std::string m_packageLocation;
+
+	// Location of the package of Main.java in Linux/GNU style.
 	std::string m_slashedPackedLocation;
 };
-
 

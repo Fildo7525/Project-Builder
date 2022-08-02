@@ -10,3 +10,4 @@ std::string Project::projectName()
 {
 	return m_dir;
 }
+

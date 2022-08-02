@@ -2,6 +2,10 @@
 
 #include "project.h"
 
+/**
+ * @class CppProject
+ * @brief Class creating cpp project.
+ */
 class CppProject : private Project
 {
 public:
