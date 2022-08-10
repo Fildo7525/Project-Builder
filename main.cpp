@@ -22,7 +22,10 @@ int main(int argc, char ** argv)
 
 	projectName->generate();
 	if (opts.useGit) {
-		executeCommand("cd " + projectName->projectName() + " && git init");
+		std::ofstream file(projectName->projectName() + "/.gitignore");
+		file << "build/\nbuild.sh\ncompile.sh\n.cache\n\n";
+		file.close();
+		executeCommand("cd " + projectName->projectName() + " && git init && git add * --ignore-errors; git commit -m \"Initial commit\"");
 	}
 
 	return 0;
