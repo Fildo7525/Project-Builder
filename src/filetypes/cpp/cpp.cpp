@@ -83,7 +83,10 @@ void CppProject::generateDirectoryNamedFiles()
 	file.close();
 
 	file.open(m_dir + "/src/CMakeLists.txt");
-	file << "add_library(lib)\n\n"
+	file << "add_library(lib\n"
+		 << tabs() << m_dir << ".cpp\n"
+		 << tabs() << m_dir << ".h\n"
+		 << ")\n\n"
 		 << "target_include_directories(lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})\n" << std::endl;
 	file.close();
 }
