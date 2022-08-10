@@ -8,6 +8,7 @@ This is a light weight project builder program that is compatible with Linux.
  - [Supported languages](#supported-languages)
     - [Cpp](#Cpp)
     - [Java](#Java)
+ - [TODO](#TODO)
  - [Neovim](#Neovim)
  - [VS Code](#vs-code)
  - [Updates](#Updates)
@@ -77,6 +78,10 @@ With `maven` option set there will be also pom.xml
  | maven  |  --maven / -m | Maven is a build system supporting java language. Install it using your prefered package manager. |
 
 NOTE: For supported options the appropriate dependencies have to be installed.
+
+## TODO
+- ROS2 option for cpp project
+- python project class
 
 ## Neovim
 
