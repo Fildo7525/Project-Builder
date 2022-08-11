@@ -31,6 +31,11 @@ public:
 	 */
 	virtual std::string projectName();
 
+	/**
+	 * @brief Initialize git repository with initial commit.
+	 */
+	void initializeGit();
+
 protected:
 	// Directory from command line.
 	std::string m_dir;
