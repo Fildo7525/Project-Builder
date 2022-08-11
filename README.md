@@ -15,10 +15,13 @@ This is a light weight project builder program that is compatible with Linux.
 
 ## Compilation
 
-To compile the project be sure to have cmake installed. To check if the executable is installed on your system
+Firstly, clone this repository ```git clone --branch master git@github.com:Fildo7525/Project-Builder.git```.
+
+To compile the project be sure to have cmake installed. To check, if the cmake executable is installed on your system
 enter ```cmake --version```. If you have it installed run ```cmake -S . -B ./build```. After the cmake setup
 go to the build direcotory and compile the project ```cd ./build && make```. To use the executable in the whole system be sure
-to add it into the path ```echo 'export PATH="${PATH}:path/to/executable"' >> ~/.bashrc```. If you use other shell, replace the shell config file.
+to add it into the path ```echo 'export PATH="${PATH}:path/to/executable"' >> ~/.bashrc```. If you use other shell, replace the shell config file
+(e.g for zsh ```echo 'export PATH="${PATH}:path/to/executable"' >> ~/.zshrc```).
 
 ## Usage
 
