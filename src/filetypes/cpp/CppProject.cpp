@@ -1,8 +1,7 @@
+#include "CppProject.h"
+
 #include "BuildProject.h"
 #include "core.h"
-#include <string>
-
-#define AOC_HEADERS "#include <algorithm>\n#include <fstream>\n#include <iterator>\n#include <memory>\n#include <numeric>\n#include <vector>\n"
 
 CppProject::CppProject(const std::string &directory, const flags &options)
 	: Project(directory, options)
@@ -30,6 +29,11 @@ void CppProject::generate()
 		command = "touch " + m_dir + "/input " + m_dir + "/test";
 		executeCommand(command, "The files test and input could not be created");
 	}
+}
+
+void CppProject::initializeRosArguments(const std::string &rosArguments)
+{
+	m_rosArguments = rosArguments;
 }
 
 std::string CppProject::cmakeVersion()

@@ -143,9 +143,16 @@ std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(const int argc, cha
 				opts.useGit = false;
 				break;
 
-			case 'r':
-				opts.ros = true;
+			case 'r': {
+				std::string rosArgumets = optarg;
+				if (newProject != nullptr && typeid(*newProject) == typeid(CppProject)) {
+					opts.ros = true;
+					dynamic_cast<CppProject*>(newProject.get())->initializeRosArguments(rosArgumets);
+				} else {
+					error("Cannot initialize ros in non-cpp project. This option will not be used.");
+				}
 				break;
+			}
 
 			case 'h':
 				opts.help = true;

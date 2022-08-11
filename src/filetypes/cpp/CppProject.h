@@ -51,6 +51,13 @@ public:
 	 */
 	void generate() override;
 
+	/**
+	 * @brief Sets ros2 arguments.
+	 *
+	 * @param rosArguments Arguments that will be forwarded to ros2 command.
+	 */
+	void initializeRosArguments(const std::string &rosArguments);
+
 private:
 
 	/**
@@ -82,5 +89,9 @@ private:
 	 * @brief Create build.sh and compile.sh files.
 	 */
 	void generateBuildFiles();
+
+private:
+	// arguments passed to ros2 command.
+	std::string m_rosArguments;
 };
 
