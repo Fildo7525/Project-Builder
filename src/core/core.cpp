@@ -1,7 +1,9 @@
 #include "core.h"
 #include "flags.h"
+
 #include "src/filetypes/cpp/CppProject.h"
 #include "src/filetypes/java/JavaProject.h"
+#include "src/filetypes/python/PythonProject.h"
 
 #include <iostream>
 #include <memory>
@@ -22,12 +24,15 @@ std::ostream &printHelp(std::ostream &os)
 
 			  << tabs() << "supported languages:\n"
 			  << tabs.up()() << "cpp:\t--type c / cpp / c++\n"
-			  << tabs()		 << "java:\t--type j / java\n\n" << tabs.down()()
+			  << tabs()		 << "java:\t--type j / java\n"
+			  << tabs()		 << "python:\t--type py / python\n\n"<< tabs.down()()
 			  << "options for C++:\n"
 			  << tabs.up()() << "QT5:\t--qt5 / -q\n"
 			  << tabs()		 << "OpenCV:\t--opencv / -c\n" << tabs.down()()
 			  << "options for Java:\n"
-			  << tabs.up()() << "Maven:\t--maven / -m"
+			  << tabs.up()() << "Maven:\t--maven / -m\n" << tabs.down()()
+			  << "options for Python:\n"
+			  << tabs.up()() << "Python does not currently support any optinos."
 	<< std::endl;
 }
 
@@ -98,6 +103,8 @@ std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(int argc, char **ar
 					opts.lang = flags::language::java;
 				else if(projectType == "cpp" || projectType == "c++" || projectType == "c")
 					opts.lang = flags::language::cpp;
+				else if(projectType == "py" || projectType == "python")
+					opts.lang = flags::language::python;
 				break;
 			}
 
@@ -134,6 +141,9 @@ std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(int argc, char **ar
 			break;
 		case flags::language::java:
 			newProject.reset((Project*)new JavaProject(newDir, opts));
+			break;
+		case flags::language::python:
+			newProject.reset((Project*)new PythonProject(newDir, opts));
 			break;
 		default:
 			newProject.reset();

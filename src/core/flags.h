@@ -12,6 +12,7 @@ struct flags
 	{
 		java,
 		cpp,
+		python,
 		none,
 	};
 
