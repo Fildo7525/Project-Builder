@@ -17,7 +17,12 @@ std::string Project::projectName()
 void Project::initializeGit()
 {
 	std::ofstream file(projectName() + "/.gitignore");
-	file << "build/\nbuild.sh\ncompile.sh\n.cache\n\n";
+	file << "build/\n"
+		 << "build.sh\n"
+		 << "compile.sh\n"
+		 << ".cache\n"
+		 << "include\n"
+		 << "log\n\n";
 	file.close();
 
 	executeCommand("cd " + projectName() + " && git init && git add * --ignore-errors 2> /dev/null; git add .gitignore; git commit -m \"Initial commit\"");

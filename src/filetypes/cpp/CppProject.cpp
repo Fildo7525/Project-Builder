@@ -5,12 +5,17 @@
 
 CppProject::CppProject(const std::string &directory, const flags &options)
 	: Project(directory, options)
+	, m_rosArguments()
 {
 }
 
 void CppProject::generate()
 {
-	std::cout << "m_dir: " << m_dir << std::endl;
+	if (m_languageFlags.ros) {
+		executeCommand("mkdir -p " + m_dir + "/src && cd " + m_dir + "/src && ros2 pkg create " + m_rosArguments, []() { executeCommand("ros2 pkg create -h"); });
+		return;
+	}
+
 	std::string command = "mkdir -p " + m_dir + "/src && cd " + m_dir + " && touch src/" + m_dir + ".cpp src/" + m_dir + ".h src/CMakeLists.txt build.sh compile.sh && chmod +x build.sh compile.sh";
 	executeCommand(command, INITIALIZE_DIR_ERROR);
 

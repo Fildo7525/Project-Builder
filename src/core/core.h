@@ -8,6 +8,7 @@
 #include "flags.h"
 #include "Project.h"
 
+#include <functional>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -44,6 +45,14 @@ void printArgumets(const char **argv, const int size);
  * @param errorMessage Error message to be printed in case of an error.
  */
 void executeCommand(const std::string &command, const std::string &errorMessage = "");
+
+/**
+ * @brief Executes the supplied command. If the command failes the errorMessage will be printed.
+ *
+ * @param command Command to execute.
+ * @param on_errorExecute Executabel function that is called on error.
+ */
+void executeCommand(const std::string &command, std::function<void()> on_errorExecute);
 
 /**
  * @brief Get the initialization line of current shell type.

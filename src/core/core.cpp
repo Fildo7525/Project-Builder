@@ -8,8 +8,7 @@
 #include <iostream>
 #include <memory>
 
-#include <stdexcept>
-#include <string>
+#include <ostream>
 #include <unistd.h>
 #include <getopt.h>
 
@@ -35,10 +34,14 @@ std::ostream &printHelp(std::ostream &os)
 			  << tabs.up()() << "cpp:\t--type c / cpp / c++\n"
 			  << tabs()		 << "java:\t--type j / java\n"
 			  << tabs()		 << "python:\t--type py / python\n\n"<< tabs.down()()
+
 			  << "options for C++:\n"
 			  << tabs.up()() << "QT5:\t--qt5 / -q\n"
-			  << tabs()		 << "OpenCV:\t--opencv / -c\n"
+			  << tabs()		 << "OpenCV:\t--opencv / -c\n" << tabs.down()()
 			  << tabs()		 << "Raspberry Pi:\t--rpi\n" << tabs.down()()
+			  << tabs()		 << "ROS:\t--ros / -r [ options ]\n"
+				<< tabs.up()()	<< "This options calls ros2 pkg create [ options ]\n" << tabs.down()()
+
 			  << "options for Java:\n"
 			  << tabs.up()() << "Maven:\t--maven / -m\n" << tabs.down()()
 			  << "options for Python:\n"
@@ -64,6 +67,14 @@ void executeCommand(const std::string &command, const std::string &errorMessage)
 	if (system(command.c_str()) != 0) {
 		std::cerr << command << std::endl;
 		error(errorMessage);
+		exit(1);
+	}
+}
+
+void executeCommand(const std::string &command, std::function<void()> on_errorExecute)
+{
+	if (system(command.c_str()) != 0) {
+		on_errorExecute();
 		exit(1);
 	}
 }
@@ -96,6 +107,7 @@ std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(const int argc, cha
 	};
 
 	std::string newDir(argv[1]);
+	std::string rosArguments;
 
 	while((option = getopt_long(argc, argv,"t:qmcgrh", long_options, &false_option)) != -1){
 
@@ -144,10 +156,9 @@ std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(const int argc, cha
 				break;
 
 			case 'r': {
-				std::string rosArgumets = optarg;
-				if (newProject != nullptr && typeid(*newProject) == typeid(CppProject)) {
+				rosArguments = optarg;
+				if (opts.lang == flags::language::cpp) {
 					opts.ros = true;
-					dynamic_cast<CppProject*>(newProject.get())->initializeRosArguments(rosArgumets);
 				} else {
 					error("Cannot initialize ros in non-cpp project. This option will not be used.");
 				}
@@ -177,9 +188,14 @@ std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(const int argc, cha
 	}
 
 	switch (opts.lang) {
-		case flags::language::cpp:
+		case flags::language::cpp: {
 			newProject.reset((Project*)new CppProject(newDir, opts));
+			CppProject *cpp = (CppProject*)newProject.get();
+			if (opts.ros) {
+				cpp->initializeRosArguments(rosArguments);
+			}
 			break;
+		}
 		case flags::language::java:
 			newProject.reset((Project*)new JavaProject(newDir, opts));
 			break;

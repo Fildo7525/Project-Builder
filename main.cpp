@@ -26,6 +26,7 @@ int main(int argc, char ** argv)
 	}
 
 	projectName->generate();
+
 	if (opts.useGit) {
 		projectName->initializeGit();
 	}
