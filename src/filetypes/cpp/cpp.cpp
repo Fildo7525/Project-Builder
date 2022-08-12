@@ -70,10 +70,13 @@ void CppProject::generateDirectoryNamedFiles()
 
 	file << "#pragma once\n\n"
 		 << "#include <iostream>\n\n"
-		 << "class " << m_dir << '\n'
+		 << (m_languageFlags.qt ? "#include <QObject>\n" : "")
+		 << "class " << m_dir << (m_languageFlags.qt ? " : public QObject" : "") << '\n'
 		 << "{\n"
-		 << "public:"
+		 << (m_languageFlags.qt ? "\tQ_OBJECT;\n" : "")
+		 << "public:\n"
 		 << tabs.up()() << m_dir << "() = default;\n"
+		 << (m_languageFlags.qt ? "\nsignals:\n\npublic slots:\n" : "")
 		 << "};\n" << std::endl;
 	file.close();
 
@@ -88,6 +91,14 @@ void CppProject::generateDirectoryNamedFiles()
 		 << tabs() << m_dir << ".h\n"
 		 << ")\n\n"
 		 << "target_include_directories(lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})\n" << std::endl;
+	if (m_languageFlags.qt) {
+		file << "target_include_directories(\n\tlib\nPUBLIC\n\t${CMAKE_CURRENT_SOURCE_DIR}\n\tQTDIR\n)\n"
+			 << "target_link_libraries(lib PUBLIC Qt5::Widgets)\n" << std::endl;
+	}
+	if (m_languageFlags.openCV) {
+		file << "target_link_libraries(lib PUBLIC ${OpenCV_LIBS})\n"
+			 << "target_link_directories(lib PUBLIC OpenCV_INCLUDE_DIRS)\n" << std::endl;
+	}
 	file.close();
 }
 
@@ -138,11 +149,11 @@ void CppProject::generateCmakeFile()
 
 	if (m_languageFlags.qt) {
 		file << "target_link_libraries(${PROJECT_NAME} PUBLIC Qt5::Widgets)\n"
-			<< "target_link_directories(${PROJECT_NAME} PUBLIC QTDIR)\n" << std::endl;
+			 << "target_link_directories(${PROJECT_NAME} PUBLIC QTDIR)\n" << std::endl;
 	}
 	if (m_languageFlags.openCV) {
 		file << "target_link_libraries(${PROJECT_NAME} PUBLIC ${OpenCV_LIBS})\n"
-			<< "target_link_directories(${PROJECT_NAME} PUBLIC OpenCV_INCLUDE_DIRS)\n" << std::endl;
+			 << "target_link_directories(${PROJECT_NAME} PUBLIC OpenCV_INCLUDE_DIRS)\n" << std::endl;
 	}
 
 	file.close();
