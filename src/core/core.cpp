@@ -1,7 +1,7 @@
 #include "core.h"
 #include "flags.h"
-#include "src/filetypes/cpp/cpp.h"
-#include "src/filetypes/java/java.h"
+#include "src/filetypes/cpp/CppProject.h"
+#include "src/filetypes/java/JavaProject.h"
 
 #include <iostream>
 #include <memory>

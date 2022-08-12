@@ -10,7 +10,7 @@
 #include <vector>
 
 #include "core.h"
-#include "project.h"
-#include "java.h"
-#include "cpp.h"
+#include "Project.h"
+#include "JavaProject.h"
+#include "CppProject.h"
 

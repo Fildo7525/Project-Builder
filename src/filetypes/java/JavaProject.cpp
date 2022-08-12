@@ -1,4 +1,4 @@
-#include "java.h"
+#include "JavaProject.h"
 
 #include <algorithm>
 #include <fstream>

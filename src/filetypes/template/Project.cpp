@@ -1,4 +1,4 @@
-#include "project.h"
+#include "Project.h"
 #include "core.h"
 
 #include <fstream>

@@ -1,13 +1,13 @@
 set(HEADERS
-	cpp/cpp.h
-	java/java.h
-	template/project.h
+	cpp/CppProject.h
+	java/JavaProject.h
+	template/Project.h
 )
 
 set(SOURCES
-	cpp/cpp.cpp
-	java/java.cpp
-	template/project.cpp
+	cpp/CppProject.cpp
+	java/JavaProject.cpp
+	template/Project.cpp
 )
 
 add_library(filetypes ${SOURCES} ${HEADERS})

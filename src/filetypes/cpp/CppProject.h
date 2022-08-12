@@ -1,6 +1,6 @@
 #pragma once
 
-#include "project.h"
+#include "Project.h"
 
 /**
  * @class CppProject

@@ -2,7 +2,7 @@
 
 #include "colors.h"
 #include "flags.h"
-#include "project.h"
+#include "Project.h"
 
 #include <iostream>
 #include <memory>
