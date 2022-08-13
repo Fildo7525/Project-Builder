@@ -8,6 +8,7 @@ This is a light weight project builder program that is compatible with Linux.
  - [Supported languages](#supported-languages)
     - [Cpp](#Cpp)
     - [Java](#Java)
+    - [Python](#Python)
  - [TODO](#TODO)
  - [Neovim](#Neovim)
  - [VS Code](#vs-code)
@@ -45,6 +46,7 @@ Currently supported these language options:
  |  :----:  |     :---:     |
  | [cpp](#Cpp)      | cpp / c++ / c |
  | [java](#Java)     | java / j      |
+ | [python](#Python)     | python / py     |
 
 Generates project folder with specified name in the argument
 
@@ -79,6 +81,18 @@ With `maven` option set there will be also pom.xml
  | Option |      Flag     | Description |
  | :----: |    :----:     |-------------|
  | maven  |  --maven / -m | Maven is a build system supporting java language. Install it using your prefered package manager. |
+
+### Python
+
+ - build.sh
+ - main.py
+
+#### Supported options
+
+ | Option |      Flag     | Description |
+ | :----: |    :----:     |-------------|
+
+  Currently there are no supported options for python.
 
 NOTE: For supported options the appropriate dependencies have to be installed.
 
