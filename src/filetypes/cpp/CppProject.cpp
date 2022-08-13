@@ -69,13 +69,13 @@ void CppProject::generateDirectoryNamedFiles()
 	indent tabs;
 
 	file << "#pragma once\n\n"
-		 << "#include <iostream>\n\n"
-		 << (m_languageFlags.qt ? "#include <QObject>\n" : "")
+		 << "#include <iostream>\n"
+		 << (m_languageFlags.qt ? "#include <QObject>\n\n" : "\n")
 		 << "class " << m_dir << (m_languageFlags.qt ? " : public QObject" : "") << '\n'
 		 << "{\n"
 		 << (m_languageFlags.qt ? "\tQ_OBJECT;\n" : "")
 		 << "public:\n"
-		 << tabs.up()() << m_dir << "() = default;\n"
+		 << tabs.up()() << m_dir <<(m_languageFlags.qt ? "(QObject *parent = nullptr);" : "() = default;\n\n")
 		 << (m_languageFlags.qt ? "\nsignals:\n\npublic slots:\n" : "")
 		 << "};\n" << std::endl;
 	file.close();
@@ -83,6 +83,12 @@ void CppProject::generateDirectoryNamedFiles()
 	fileName = m_dir + "/src/" + m_dir + ".cpp";
 	file.open(fileName, std::ios::out);
 	file << "#include \"" << m_dir << ".h\"\n" << std::endl;
+	if (m_languageFlags.qt) {
+		file << m_dir << "::" << m_dir << "(QObject *parent)\n"
+			 << "\t: QObject(parent)\n"
+			 << "{\n"
+			 << "}\n" << std::endl;
+	}
 	file.close();
 
 	file.open(m_dir + "/src/CMakeLists.txt");
