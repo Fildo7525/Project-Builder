@@ -73,6 +73,7 @@ std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(int argc, char **ar
 	struct option long_options[] = {
 		{"type",	required_argument, 0, 't'},
 		{"qt5",		no_argument,	   0, 'q'},
+		{"rpi",		no_argument,	   0, 90 },
 		{"maven",	no_argument,	   0, 'm'},
 		{"opencv",	no_argument,	   0, 'c'},
 		{"no-git",	no_argument,	   0, 'g'},
@@ -82,7 +83,7 @@ std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(int argc, char **ar
 
 	std::string newDir(argv[1]);
 
-	while((option = getopt_long(argc, argv,"t:qmcgh", long_options, &false_option)) != -1){
+	while((option = getopt_long(argc, argv,"t:qrmcgh", long_options, &false_option)) != -1){
 
 		switch(option) {
 			case 't': {
@@ -110,6 +111,10 @@ std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(int argc, char **ar
 
 			case 'q':
 				opts.qt = true;
+				break;
+
+			case 90:
+				opts.rasPi = true;
 				break;
 
 			case 'm':

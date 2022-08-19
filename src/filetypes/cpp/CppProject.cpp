@@ -137,6 +137,9 @@ void CppProject::generateCmakeFile()
 	if (m_languageFlags.openCV) {
 			file << "# OpenCV definition\nfind_package(OpenCV REQUIRED)\n\n";
 	}
+	if (m_languageFlags.rasPi) {
+			file << "find_library(WIRINGPI_LIBRARIES NAMES wiringPi)\n\n";
+	}
 
 	file << "set(SOURCES\n"
 			<< tabs.up()() << "main.cpp\n"
@@ -151,7 +154,11 @@ void CppProject::generateCmakeFile()
 			<< tabs() << "${HEADERS}\n"
 		<< ")\n\n"
 
-	 	<< "target_link_libraries(${PROJECT_NAME} PUBLIC lib)\n\n";
+		<< "target_link_libraries(\n\t${PROJECT_NAME}\nPUBLIC\n\tlib";
+	if (m_languageFlags.rasPi)
+	{
+		file << "\n\t${WIRINGPI_LIBRARIES})\n\n";
+	}
 
 	if (m_languageFlags.qt) {
 		file << "target_link_libraries(${PROJECT_NAME} PUBLIC Qt5::Widgets)\n"

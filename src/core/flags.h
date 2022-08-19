@@ -21,6 +21,7 @@ struct flags
 	// Cpp flags
 	bool qt;
 	bool openCV;
+	bool rasPi;
 
 	// Java flags
 	bool maven;
@@ -28,6 +29,7 @@ struct flags
 	// True if an error occured.
 	bool err;
 
+	// Wether to use git as a version control system.
 	bool useGit;
 
 	// True if help/h flag specified. In this case all other flags are ignored.
@@ -40,6 +42,7 @@ struct flags
 	: lang(language::none)
 	, qt(false)
 	, openCV(false)
+	, rasPi(false)
 	, maven(false)
 	, err(false)
 	, useGit(true)
