@@ -81,13 +81,14 @@ std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(const int argc, cha
 	std::shared_ptr<Project> newProject(nullptr);
 
 	struct option long_options[] = {
-		{"type",	required_argument,	0, 't'},
-		{"qt5",		no_argument,		0, 'q'},
-		{"rpi",		no_argument,		0, 90 },
-		{"maven",	no_argument,		0, 'm'},
-		{"opencv",	no_argument,		0, 'c'},
-		{"no-git",	no_argument,		0, 'g'},
-		{"help"	,	no_argument,		0, 'h'},
+		{"type",	required_argument, 0, 't'},
+		{"qt5",		no_argument,	   0, 'q'},
+		{"rpi",		no_argument,	   0, 90 },
+		{"maven",	no_argument,	   0, 'm'},
+		{"opencv",	no_argument,	   0, 'c'},
+		{"no-git",	no_argument,	   0, 'g'},
+		{"ros",		required_argument, 0, 'r'},
+		{"help"	,	no_argument,	   0, 'h'},
 		{"list-completion",	no_argument,0, 91},
 		{"list-languages",	no_argument,0, 92},
 		{"aoc",		no_argument,		0, 'a'},
@@ -96,7 +97,7 @@ std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(const int argc, cha
 
 	std::string newDir(argv[1]);
 
-	while((option = getopt_long(argc, argv, "t:qrmcgha", long_options, &false_option)) != -1){
+	while((option = getopt_long(argc, argv,"t:qmcgrh", long_options, &false_option)) != -1){
 
 		switch(option) {
 			case 't': {
@@ -140,6 +141,10 @@ std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(const int argc, cha
 
 			case 'g':
 				opts.useGit = false;
+				break;
+
+			case 'r':
+				opts.ros = true;
 				break;
 
 			case 'h':

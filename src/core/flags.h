@@ -49,6 +49,9 @@ struct flags
 	/// Advent of code.
 	bool aoc;
 
+	// True if ros is specified. This option is supported only with CPP language flag.
+	bool ros;
+
 	/**
 	 * @brief Constructor
 	 */
@@ -60,7 +63,9 @@ struct flags
 		, maven(false)
 		, err(false)
 		, useGit(true)
+		, ros(false)
 		, help(false)
-		, aoc(false) { }
+	{
+	}
 };
 
