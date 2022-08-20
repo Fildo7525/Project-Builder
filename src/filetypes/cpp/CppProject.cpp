@@ -156,17 +156,22 @@ void CppProject::generateCmakeFile()
 
 		<< "target_link_libraries(\n\t${PROJECT_NAME}\nPUBLIC\n\tlib";
 	if (m_languageFlags.rasPi)
-	{
-		file << "\n\t${WIRINGPI_LIBRARIES})\n\n";
-	}
+		file << "\n\t${WIRINGPI_LIBRARIES}";
+	if (m_languageFlags.qt)
+		file << "\n\tQt5::Widgets";
+	if (m_languageFlags.openCV)
+		file << "\n\t${OpenCV_LIBS}";
 
-	if (m_languageFlags.qt) {
-		file << "target_link_libraries(${PROJECT_NAME} PUBLIC Qt5::Widgets)\n"
-			 << "target_link_directories(${PROJECT_NAME} PUBLIC QTDIR)\n" << std::endl;
-	}
-	if (m_languageFlags.openCV) {
-		file << "target_link_libraries(${PROJECT_NAME} PUBLIC ${OpenCV_LIBS})\n"
-			 << "target_link_directories(${PROJECT_NAME} PUBLIC OpenCV_INCLUDE_DIRS)\n" << std::endl;
+	file << "\n)\n\n";
+
+	if (m_languageFlags.qt || m_languageFlags.openCV) {
+		file << "target_link_directories(\n\t${PROJECT_NAME}\nPUBLIC";
+		if (m_languageFlags.qt)
+			file << "\n\tQTDIR";
+		if (m_languageFlags.openCV)
+			file << "\n\tOpenCV_INCLUDE_DIRS";
+
+		file << "\n)\n" << std::endl;
 	}
 
 	file.close();

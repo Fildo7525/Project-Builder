@@ -28,7 +28,8 @@ std::ostream &printHelp(std::ostream &os)
 			  << tabs()		 << "python:\t--type py / python\n\n"<< tabs.down()()
 			  << "options for C++:\n"
 			  << tabs.up()() << "QT5:\t--qt5 / -q\n"
-			  << tabs()		 << "OpenCV:\t--opencv / -c\n" << tabs.down()()
+			  << tabs()		 << "OpenCV:\t--opencv / -c\n"
+			  << tabs()		 << "Raspberry Pi:\t--rpi\n" << tabs.down()()
 			  << "options for Java:\n"
 			  << tabs.up()() << "Maven:\t--maven / -m\n" << tabs.down()()
 			  << "options for Python:\n"
@@ -41,7 +42,7 @@ void error(const std::string &msg)
 	std::cerr << RED << msg << NORM << std::endl;
 }
 
-void printArgumets(char **argv, int size)
+void printArgumets(const char **argv, const int size)
 {
 	int i = 0;
 	for ( ; i < size; i++) {
@@ -63,7 +64,7 @@ std::string shellInit()
 	return std::string("#!") +  getenv("SHELL");
 }
 
-std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(int argc, char **argv)
+std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(const int argc, char **argv)
 {
 	flags opts;
 	int option;
@@ -137,8 +138,6 @@ std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(int argc, char **ar
 				std::perror("Getopt: "), opts.err = true;
 		}
 	}
-
-	// printArgumets(argv, argc);
 
 	switch (opts.lang) {
 		case flags::language::cpp:

@@ -31,7 +31,7 @@ void error(const std::string &msg);
  * @param argv Args to be printed.
  * @param size Size of the array of arguments.
  */
-void printArgumets(char **argv, int size);
+void printArgumets(const char **argv, const int size);
 
 /**
  * @brief Executes the supplied command. If the command failes the errorMessage will be printed.
