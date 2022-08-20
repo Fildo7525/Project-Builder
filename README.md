@@ -66,6 +66,9 @@ Generates project folder with specified name in the argument
  | :----: |    :----:     |-------------|
  | QT5    | --qt5 / -q    | To be able to use this flag. Download qt5 using ```sudo apt install qt5``` command on Ubuntu. Or any other package manager. |
  | OpenCV | --opencv / -c | To be able to use OpenCV download it using your prefered package manager. |
+ | Raspberry pi | --rpi   | To be able to use this option you have to download and install WiringPi library. This option links Wiring Pi to the project. |
+
+ NOTE: WiringPi is a depricated library, which may not work on newer boards. Try searching mantained code. e.g.: https://github.com/joan2937/pigpio or for cpp it's https://github.com/JoachimSchurig/CppGPIO. In future, I will definitly add CppGPIO to the flags.
 
 ### Java
 
