@@ -22,11 +22,11 @@ To compile the project be sure to have cmake installed. To check, if the cmake e
 enter ```cmake --version```. If you have it installed run ```cmake -S . -B ./build```. After the cmake setup
 go to the build direcotory and compile the project ```cd ./build && make```. To use the executable in the whole system be sure
 to add it into the path ```echo 'export PATH="${PATH}:path/to/executable"' >> ~/.bashrc```. If you use other shell, replace the shell config file
-(e.g for zsh ```echo 'export PATH="${PATH}:path/to/executable"' >> ~/.zshrc```).
+(e.g for zsh ```echo 'export PATH="${PATH}:path/to/executable"' >> ~/.zshrc```). Alternativly, you can move the executable to the ```/usr/bin``` folder.
 
 ## Usage
 
-If you did not compile the project, read and do the [Compilateion](#compilation) section.
+If you did not compile the project, read and do the [Compilation](#compilation) section.
 To run the code run:
 
     buildProject <project-directory> --type <language> [options]
@@ -53,12 +53,12 @@ Generates project folder with specified name in the argument
 ### Cpp
 
   - build/
-  - compile_commands.json
-  - build.sh
-  - compile.sh
+  - compile_commands.json (compilation flags for language servers (LSP's) like clangd)
+  - build.sh (containes code for compilation and launching the code)
+  - compile.sh (containes code for compilation)
   - main.cpp
-  - `ProjectName`.cpp
-  - `ProjectName`.h
+  - src/`ProjectName`.cpp
+  - src/`ProjectName`.h
 
 #### Supported options
 
@@ -68,7 +68,7 @@ Generates project folder with specified name in the argument
  | OpenCV | --opencv / -c | To be able to use OpenCV download it using your prefered package manager. |
  | Raspberry pi | --rpi   | To be able to use this option you have to download and install WiringPi library. This option links Wiring Pi to the project. |
 
- NOTE: WiringPi is a depricated library, which may not work on newer boards. Try searching mantained code. e.g.: https://github.com/joan2937/pigpio or for cpp it's https://github.com/JoachimSchurig/CppGPIO. In future, I will definitly add CppGPIO to the flags.
+ NOTE: WiringPi is a depricated library, which may not work on newer boards. Try installing mantained code. e.g.: https://github.com/joan2937/pigpio or for C++ it's https://github.com/JoachimSchurig/CppGPIO. In future, I will definitly add CppGPIO to the flags.
 
 ### Java
 
@@ -101,13 +101,13 @@ NOTE: For supported options the appropriate dependencies have to be installed.
 
 ## TODO
 - ROS2 option for cpp project
-- python project class
+- Raspberry Pi for python
 
 ## Neovim
 
 If you are looking for a code editor or an IDE. I highly recommend ```neovim```
 My neovim config is adjusted for this project creator. Check it out if you want
-https://github.com/Fildo7525/nvimLua
+https://github.com/Fildo7525/nvimLua. To start with your own configuragion watch the [Neovim from scratch](https://www.youtube.com/watch?v=ctH-a-1eUME&list=PLhoH5vyxr6Qq41NFL4GvhFp-WLd5xzIzZ) series.
 
 ## VS Code
 
@@ -126,5 +126,5 @@ switch into JSON view ( icon in the top right corner ) and add a snippet
 
 ## Updates
 
-If you have any suggestions for any improvement, do not hesitate to create an issue or fork the repository.
+If you have any suggestions for any improvement, do not hesitate to create an issue or fork the repository and reate a pull request.
 
