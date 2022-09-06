@@ -24,6 +24,8 @@ go to the build direcotory and compile the project ```cd ./build && make```. To 
 to add it into the path ```echo 'export PATH="${PATH}:path/to/executable"' >> ~/.bashrc```. If you use other shell, replace the shell config file
 (e.g for zsh ```echo 'export PATH="${PATH}:path/to/executable"' >> ~/.zshrc```). Alternativly, you can move the executable to the ```/usr/bin``` folder.
 
+If you want to build the documentation, go to the doc folder and run ```doxygen -g config && doxygen config```. This will generate html, latex, and man documentation.
+
 ## Usage
 
 If you did not compile the project, read and do the [Compilation](#compilation) section.
