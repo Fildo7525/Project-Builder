@@ -7,4 +7,7 @@ buildProject
 build.sh
 compile.sh
 compile_commands.json
+doc/html
+doc/latex
+doc/man
 
