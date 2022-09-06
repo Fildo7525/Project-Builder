@@ -3,6 +3,11 @@
 #include <algorithm>
 #include <fstream>
 
+JavaProject::JavaProject(const std::string &dir, const flags &languageFlags)
+	: Project(dir, languageFlags)
+{
+}
+
 void JavaProject::generate()
 {
 	linuxAndJavaPaths();

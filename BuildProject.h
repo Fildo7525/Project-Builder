@@ -1,3 +1,8 @@
+/**
+ * @file
+ * @brief This file containes all the includes so it would be easier to implement the code.
+ */
+
 #pragma once
 
 #include <algorithm>

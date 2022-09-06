@@ -1,3 +1,8 @@
+/**
+ * @file
+ * @brief Colors for changing the color of the outputed text.
+ */
+
 #pragma once
 
 #define GREEN "\033[32;2m"

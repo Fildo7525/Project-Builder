@@ -1,3 +1,7 @@
+/**
+ * @file core.h
+ * @brief This file offers basic core components that are used in all project and their funcitons.
+ */
 #pragma once
 
 #include "colors.h"

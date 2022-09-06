@@ -1,3 +1,8 @@
+/**
+ * @file
+ * @brief Template for creating Filetype projects.
+ */
+
 #pragma once
 
 #include "flags.h"
@@ -6,7 +11,7 @@
 
 /**
  * @class Project
- * @brief Virtual class supporting creatinon of a project.
+ * @brief Virtual class supporting creation of a project.
  */
 class Project
 {
@@ -17,12 +22,13 @@ public:
 	Project(const std::string &dir, const flags &languageFlags);
 
 	/**
-	 * @brief Constructor
+	 * @brief Destructor
 	 */
 	virtual ~Project() = default;
 
 	/**
 	 * @brief Pure virtual funciotn that generates the project.
+	 * Must be implemented in all child classes. And should create everything for the project.
 	 */
 	virtual void generate() = 0;
 
@@ -37,10 +43,10 @@ public:
 	void initializeGit();
 
 protected:
-	// Directory from command line.
+	/// Directory from command line.
 	std::string m_dir;
 
-	// Flags generated from command line arguments.
+	/// Flags generated from command line arguments.
 	flags m_languageFlags;
 };
 

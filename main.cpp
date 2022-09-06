@@ -1,3 +1,8 @@
+/**
+ * @file
+ * @brief Where all the magic happens.
+ */
+
 #include "BuildProject.h"
 
 int main(int argc, char ** argv)

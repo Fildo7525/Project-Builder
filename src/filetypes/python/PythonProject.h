@@ -1,11 +1,22 @@
+/**
+ * @file
+ * @brief Python project generation class.
+ */
+
 #pragma once
 
 #include "Project.h"
 
+/**
+ * @class PythonProject
+ * @brief Class creating python3 project
+ *
+ * Overrides generate function. This class doesn't do much. There are created main.py file and generator shell scripts. Shebangs are defined based on your actual SHELL environment variable.
+ */
 class PythonProject : private Project
 {
 public:
-	// Constructor
+	/// Constructor
 	PythonProject(const std::string &dir, const flags &languageFlags);
 
 	/**
