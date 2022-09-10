@@ -16,3 +16,10 @@ elif [[ $SHELL == "/bin/bash" ]]; then
 	echo "source "$DIR./init.bash"" >> $HOME/.bashrc
 fi
 
+cd ../doc
+doxygen config
+cd man/man3
+PAGE=$(ls -1 | grep md)
+mv $PAGE buildProject.3
+sudo cp buildProject.3 /usr/share/man/man3/buildProject.3
+
