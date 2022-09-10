@@ -4,6 +4,8 @@
  */
 
 #pragma once
+#define COMPLETION_LIST "--type -t --qt5 -q --rpi --maven -m --opencv -c --no-git -g --help -h --list-completion --list-languages"
+#define LANGUAGES_LIST "cpp java python"
 
 /**
  * @class flags

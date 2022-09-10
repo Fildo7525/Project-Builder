@@ -20,7 +20,13 @@ std::ostream &printHelp(std::ostream &os)
 
 			  << tabs() << "--help -h\tPrint this help\n"
 			  << tabs() << "--no-git -g\tProhibit default git repozitory initialization\n"
-			  << tabs() << "--type -t\tDefine project language\n\n"
+			  << tabs() << "--type -t\tDefine project language\n"
+			  << tabs() << "--qt5 -q\tLink qt5 to your C++ project\n"
+			  << tabs() << "--opencv -c\tLink OpenCV to your C++ project\n"
+			  << tabs() << "--rpi\t\tLink WiringPi to your C++ project\n"
+			  << tabs() << "--maven -m\tUse maven as Java build system\n"
+			  << tabs() << "--list-languages\tList all currently supported languages\n"
+			  << tabs() << "--list-completion\tList all supported commands\n\n"
 
 			  << tabs() << "supported languages:\n"
 			  << tabs.up()() << "cpp:\t--type c / cpp / c++\n"
@@ -79,6 +85,8 @@ std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(const int argc, cha
 		{"opencv",	no_argument,	   0, 'c'},
 		{"no-git",	no_argument,	   0, 'g'},
 		{"help"	,	no_argument,	   0, 'h'},
+		{"list-completion",	no_argument,0, 91},
+		{"list-languages",	no_argument,0, 92},
 		{0,			0,				   0,  0 }
 	};
 
@@ -133,6 +141,14 @@ std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(const int argc, cha
 			case 'h':
 				opts.help = true;
 				break;
+
+			case 91:
+				std::cout << COMPLETION_LIST << std::endl;
+				exit(0);
+
+			case 92:
+				std::cout << LANGUAGES_LIST << std::endl;
+				exit(0);
 
 			default:
 				std::perror("Getopt: "), opts.err = true;
