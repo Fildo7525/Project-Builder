@@ -18,11 +18,17 @@ This is a light weight project builder program that is compatible with Linux.
 
 Firstly, clone this repository ```git clone --branch master git@github.com:Fildo7525/Project-Builder.git```.
 
+The instalation process is really easy. Just type into the shell ```$SHELL ./init.sh```. That is all. By doing this you will get completion for this
+executable for bash and zsh.<br />
+
+Otherwise if you want to do the installation by hand follow the steps below.<br />
+
 To compile the project be sure to have cmake installed. To check, if the cmake executable is installed on your system
 enter ```cmake --version```. If you have it installed run ```cmake -S . -B ./build```. After the cmake setup
-go to the build direcotory and compile the project ```cd ./build && make```. To use the executable in the whole system be sure
+go to the build direcotory and compile the project ```cd ./build && nice make -j4```. To use the executable in the whole system be sure
 to add it into the path ```echo 'export PATH="${PATH}:path/to/executable"' >> ~/.bashrc```. If you use other shell, replace the shell config file
 (e.g for zsh ```echo 'export PATH="${PATH}:path/to/executable"' >> ~/.zshrc```). Alternativly, you can move the executable to the ```/usr/bin``` folder.
+Or create a link to the executable in the ```/usr/bin``` folder. To be able to use autocompletion in bash source the ./startup/init.bash in the .bashrc. For zsh completion create a link ```ln -s $PWD/startup/_buildProject.zsh $HOME/.local/share/zinit/completion/_buildProject```.
 
 If you want to build the documentation, go to the doc folder and run ```doxygen -g config && doxygen config```. This will generate html, latex, and man documentation.
 
