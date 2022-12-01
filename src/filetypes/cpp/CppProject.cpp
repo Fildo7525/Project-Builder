@@ -1,4 +1,8 @@
 #include "BuildProject.h"
+#include "core.h"
+#include <string>
+
+#define AOC_HEADERS "#include <fstream>\n#include <algorithm>\n#include <iterator>\n#include <numeric>\n#include <vector>\n"
 
 CppProject::CppProject(const std::string &directory, const flags &options)
 	: Project(directory, options)
@@ -20,7 +24,12 @@ void CppProject::generate()
 	generateBuildFiles();
 
 	command = "cd " + m_dir + " && cmake CMakeLists.txt -S . -B ./build && cp ./build/compile_commands.json .";
+
 	executeCommand(command);
+	if (m_languageFlags.aoc) {
+		command = "touch " + m_dir + "/input " + m_dir + "/test";
+		executeCommand(command, "The files test and input could not be created");
+	}
 }
 
 std::string CppProject::cmakeVersion()
@@ -54,6 +63,8 @@ void CppProject::generateMainFile()
 
 	file << "#include \"" << m_dir << ".h\"\n\nint main(int argc, char *argv[])\n{\n"
 				<< (m_languageFlags.qt ? "\tQCoreApplication a(argc, argv);\n" : "")
+				<< (m_languageFlags.aoc ? "\tstd::fstream input(\"../input\", std::ios::in);\n\tstd::string line;" : "")
+				<< (m_languageFlags.aoc ? "while (std::getline(input, line)) {\n\t}\n" : "")
 				<< tabs.up()() << "std::cout << \"Hello World!\\n\";\n"
 				<< (m_languageFlags.qt ? "\t// a.exec(); // event loop\n" : "")
 				<< tabs() << "return 0;\n"
@@ -70,8 +81,9 @@ void CppProject::generateDirectoryNamedFiles()
 
 	file << "#pragma once\n\n"
 		 << "#include <iostream>\n"
+		 << (m_languageFlags.aoc ? AOC_HEADERS : "")
 		 << (m_languageFlags.qt ? "#include <QObject>\n\n" : "\n")
-		 << "class " << m_dir << (m_languageFlags.qt ? " : public QObject" : "") << '\n'
+		 << "class " << m_dir << (m_languageFlags.qt ? "\n\t: public QObject" : "") << '\n'
 		 << "{\n"
 		 << (m_languageFlags.qt ? "\tQ_OBJECT;\n" : "")
 		 << "public:\n"

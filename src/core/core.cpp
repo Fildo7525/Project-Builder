@@ -8,6 +8,8 @@
 #include <iostream>
 #include <memory>
 
+#include <stdexcept>
+#include <string>
 #include <unistd.h>
 #include <getopt.h>
 
@@ -27,7 +29,7 @@ std::ostream &printHelp(std::ostream &os)
 			  << tabs() << "--maven -m\tUse maven as Java build system\n"
 			  << tabs() << "--list-languages\tList all currently supported languages\n"
 			  << tabs() << "--list-completion\tList all supported commands\n\n"
-			  << tabs() << "--aoc <year-day>\tList all supported commands\n\n"
+			  << tabs() << "--aoc\tPrepare the project for advent of code\n\n"
 
 			  << tabs() << "supported languages:\n"
 			  << tabs.up()() << "cpp:\t--type c / cpp / c++\n"
@@ -94,7 +96,7 @@ std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(const int argc, cha
 
 	std::string newDir(argv[1]);
 
-	while((option = getopt_long(argc, argv,"t:qrmcgh", long_options, &false_option)) != -1){
+	while((option = getopt_long(argc, argv, "t:qrmcgha", long_options, &false_option)) != -1){
 
 		switch(option) {
 			case 't': {
