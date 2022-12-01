@@ -27,6 +27,7 @@ std::ostream &printHelp(std::ostream &os)
 			  << tabs() << "--maven -m\tUse maven as Java build system\n"
 			  << tabs() << "--list-languages\tList all currently supported languages\n"
 			  << tabs() << "--list-completion\tList all supported commands\n\n"
+			  << tabs() << "--aoc <year-day>\tList all supported commands\n\n"
 
 			  << tabs() << "supported languages:\n"
 			  << tabs.up()() << "cpp:\t--type c / cpp / c++\n"
@@ -78,16 +79,17 @@ std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(const int argc, cha
 	std::shared_ptr<Project> newProject(nullptr);
 
 	struct option long_options[] = {
-		{"type",	required_argument, 0, 't'},
-		{"qt5",		no_argument,	   0, 'q'},
-		{"rpi",		no_argument,	   0, 90 },
-		{"maven",	no_argument,	   0, 'm'},
-		{"opencv",	no_argument,	   0, 'c'},
-		{"no-git",	no_argument,	   0, 'g'},
-		{"help"	,	no_argument,	   0, 'h'},
+		{"type",	required_argument,	0, 't'},
+		{"qt5",		no_argument,		0, 'q'},
+		{"rpi",		no_argument,		0, 90 },
+		{"maven",	no_argument,		0, 'm'},
+		{"opencv",	no_argument,		0, 'c'},
+		{"no-git",	no_argument,		0, 'g'},
+		{"help"	,	no_argument,		0, 'h'},
 		{"list-completion",	no_argument,0, 91},
 		{"list-languages",	no_argument,0, 92},
-		{0,			0,				   0,  0 }
+		{"aoc",		no_argument,		0, 'a'},
+		{0,			0,					0,  0 }
 	};
 
 	std::string newDir(argv[1]);
@@ -149,6 +151,11 @@ std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(const int argc, cha
 			case 92:
 				std::cout << LANGUAGES_LIST << std::endl;
 				exit(0);
+
+			case 'a': {
+				opts.aoc = true;
+				break;
+			}
 
 			default:
 				std::perror("Getopt: "), opts.err = true;

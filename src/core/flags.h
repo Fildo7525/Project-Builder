@@ -46,18 +46,21 @@ struct flags
 	bool useGit;
 	/// True if help/h flag specified. In this case all other flags are ignored.
 	bool help;
+	/// Advent of code.
+	bool aoc;
 
 	/**
 	 * @brief Constructor
 	 */
 	flags()
-	: lang(language::none)
-	, qt(false)
-	, openCV(false)
-	, rasPi(false)
-	, maven(false)
-	, err(false)
-	, useGit(true)
-	, help(false) { }
+		: lang(language::none)
+		, qt(false)
+		, openCV(false)
+		, rasPi(false)
+		, maven(false)
+		, err(false)
+		, useGit(true)
+		, help(false)
+		, aoc(false) { }
 };
 
