@@ -20,6 +20,6 @@ void Project::initializeGit()
 	file << "build/\nbuild.sh\ncompile.sh\n.cache\n\n";
 	file.close();
 
-	executeCommand("cd " + projectName() + " && git init && git add * --ignore-errors; git commit -m \"Initial commit\"");
+	executeCommand("cd " + projectName() + " && git init && git add * --ignore-errors 2> /dev/null; git add .gitignore; git commit -m \"Initial commit\"");
 }
 

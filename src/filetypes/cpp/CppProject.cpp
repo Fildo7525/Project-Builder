@@ -2,7 +2,7 @@
 #include "core.h"
 #include <string>
 
-#define AOC_HEADERS "#include <fstream>\n#include <algorithm>\n#include <iterator>\n#include <numeric>\n#include <vector>\n"
+#define AOC_HEADERS "#include <algorithm>\n#include <fstream>\n#include <iterator>\n#include <memory>\n#include <numeric>\n#include <vector>\n"
 
 CppProject::CppProject(const std::string &directory, const flags &options)
 	: Project(directory, options)
@@ -63,8 +63,8 @@ void CppProject::generateMainFile()
 
 	file << "#include \"" << m_dir << ".h\"\n\nint main(int argc, char *argv[])\n{\n"
 				<< (m_languageFlags.qt ? "\tQCoreApplication a(argc, argv);\n" : "")
-				<< (m_languageFlags.aoc ? "\tstd::fstream input(\"../input\", std::ios::in);\n\tstd::string line;" : "")
-				<< (m_languageFlags.aoc ? "while (std::getline(input, line)) {\n\t}\n" : "")
+				<< (m_languageFlags.aoc ? "\tstd::fstream input(\"../input\", std::ios::in);\n\tstd::string line;\n\n" : "")
+				<< (m_languageFlags.aoc ? "\twhile (std::getline(input, line)) {\n\t}\n\n" : "")
 				<< tabs.up()() << "std::cout << \"Hello World!\\n\";\n"
 				<< (m_languageFlags.qt ? "\t// a.exec(); // event loop\n" : "")
 				<< tabs() << "return 0;\n"
@@ -133,7 +133,8 @@ void CppProject::generateCmakeFile()
 
 		<< "set(CMAKE_CXX_STANDARD 17)\n"
 		<< "set(CMAKE_CXX_STANDARD_REQUIRED ON)\n"
-		<< "set(CMAKE_EXPORT_COMPILE_COMMANDS ON)\n\n";
+		<< "set(CMAKE_EXPORT_COMPILE_COMMANDS ON)\n"
+		<< "set(CMAKE_BUILD_TYPE Debug)\n\n";
 
 	if (m_languageFlags.qt) {
 		file << "# QT5 definition\nset(CMAKE_AUTOMOC ON)\n"
