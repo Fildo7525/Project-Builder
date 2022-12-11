@@ -28,10 +28,9 @@ if [[ $? != 0  ]]; then
 	sudo apt install doxygen -y
 fi
 
-cd ../doc
-doxygen config
+cd ./doc
+doxygen config &> /dev/null
 cd man/man3
-PAGE=$(ls -1 | grep md)
-mv $PAGE buildProject.3
-sudo cp buildProject.3 /usr/share/man/man3/buildProject.3
+PAGE=$(ls ../../.. -1 | grep md)
+sudo cp ../../../$PAGE /usr/share/man/man3/buildProject.3
 
