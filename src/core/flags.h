@@ -1,6 +1,6 @@
 /**
  * @file flags.h
- * @brief Containes flags mapping command line arguments.
+ * @brief Contains flags mapping command line arguments.
  */
 
 #pragma once
@@ -10,7 +10,7 @@
 /**
  * @class flags
  * @brief Flags supported by the program for generating projects.
- * Parameters are language, qt, openCV, maven, typeFlag, err.<br>
+ * Parameters are language, qt, openCV, maven, typeFlag, err.
  */
 struct flags
 {
@@ -40,7 +40,7 @@ struct flags
 	bool maven;
 
 	// GENERAL FLAGS
-	/// True if an error occured.
+	/// True if an error occurred.
 	bool err;
 	/// Wether to use git as a version control system
 	bool useGit;
