@@ -5,9 +5,10 @@
 
 args=( \
 	{-h,--help}:"Print help" \
-	{--type,-t}:"Define project language" \
+	{--type,-t}:"Define project language (C++, Java, Python)" \
 	{--no-git,-g}:"Prohibit default git repozitory initialization" \
 	{--qt5,-q}:"Link qt5 to your C++ project" \
+	{--aoc,-a}:"Prepare the project for the Advent of code challenge C++ project" \
 	{--opencv,-c}:"Link OpenCV to your C++ project" \
 	{--maven,-m}:"Use maven as Java build system" \
 	"--rpi:Link WiringPi to your C++ project" \
