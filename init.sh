@@ -7,12 +7,12 @@ BUILD_DIR="$(pwd)/build"
 STARTUP_DIR="$(pwd)/startup"
 LINK=$HOME/.local/share/zinit/completions/_buildProject
 
-if [[ $SHELL == "/usr/bin/zsh" || $SHELL == "/bin/zsh" ]]; then
+if [[ $SHELL = "/usr/bin/zsh" || $SHELL = "/bin/zsh" ]]; then
 	echo "export PATH=\"$PATH:$BUILD_DIR\"" >> $HOME/.zshrc
 	if [[ ! -f $LINK ]]; then
 		ln -s $STARTUP_DIR/_buildProject.zsh $LINK
 	fi
-elif [[ $SHELL == "/bin/bash" ]]; then
+elif [[ $SHELL = "/bin/bash" ]]; then
 	echo "export PATH=\"\$PATH:$BUILD_DIR\"" >> $HOME/.bashrc
 	echo "source $STARTUP_DIR/init.bash" >> $HOME/.bashrc
 	. ~/.bashrc
