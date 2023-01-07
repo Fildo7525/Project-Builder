@@ -12,6 +12,7 @@ if [[ $SHELL = "/usr/bin/zsh" || $SHELL = "/bin/zsh" ]]; then
 	if [[ ! -f $LINK ]]; then
 		ln -s $STARTUP_DIR/_buildProject.zsh $LINK
 	fi
+	. ~/.zshrc
 elif [[ $SHELL = "/bin/bash" ]]; then
 	echo "export PATH=\"\$PATH:$BUILD_DIR\"" >> $HOME/.bashrc
 	echo "source $STARTUP_DIR/init.bash" >> $HOME/.bashrc
