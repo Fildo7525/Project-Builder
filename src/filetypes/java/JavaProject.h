@@ -15,7 +15,14 @@
  * @class JavaProject
  * @brief Class creating java project.
  *
- * Overrides generate funciton. Creates package based on the user input after inputting the command. The package name is stored in java (dotted notation) and also in GNU/Linux (slashed notation). Generates Main.java file with supported class and funciton. Based on the flags the porject can have a builder tool maven or without builder. In the first case and in the second case the shell scripts will be created with accurate shebang. The same as with other projects compile.sh compiles the project and build.sh builds and executes the program. It doesn't matter wether you specified the maven option. The scripts will be generated accordingly.
+ * Overrides generate funciton. Creates package based on the user input after inputting
+ * the command. The package name is stored in java (dotted notation) and also in GNU/Linux
+ * (slashed notation). Generates Main.java file with supported class and funciton. Based
+ * on the flags the porject can have a builder tool maven or without builder. In the first
+ * case and in the second case the shell scripts will be created with accurate shebang.
+ * The same as with other projects 'compile' executable script compiles the project
+ * and 'run' builds and executes the program. It doesn't matter wether you specified
+ * the maven option. The scripts will be generated accordingly.
  */
 class JavaProject : private Project
 {
@@ -23,8 +30,10 @@ public:
 	/// Constructor
 	JavaProject(const std::string &dir, const flags &languageFlags);
 
-	/// Overriden funciton from interface Project.
+	/// Overriden funciton from interface @c Project.
+	///@{
 	void generate() override;
+	///@}
 
 private:
 
@@ -49,7 +58,7 @@ private:
 	void generatePomXML();
 
 	/**
-	* @brief Generates build.sh and compile.sh.
+	* @brief Generates run and compile files.
 	*/
 	void generateBuildFiles();
 

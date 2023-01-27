@@ -14,7 +14,7 @@ void JavaProject::generate()
 
 	std::cout << "slashed: " << m_slashedPackedLocation << std::endl;
 
-	std::string command = "mkdir " + m_dir + " && cd " + m_dir + " && touch compile.sh build.sh && chmod 711 compile.sh build.sh && mkdir -p "
+	std::string command = "mkdir " + m_dir + " && cd " + m_dir + " && touch compile run && chmod 711 compile run && mkdir -p "
 							+ m_slashedPackedLocation;
 	executeCommand(command, INITIALIZE_DIR_ERROR);
 
@@ -90,7 +90,7 @@ void JavaProject::generateBuildFiles()
 {
 	std::string compile_command = "javac --release 11 -Werror -d ./debug ";
 
-	std::string fileName = m_dir + "/compile.sh";
+	std::string fileName = m_dir + "/compile";
 
 	std::fstream file(fileName, std::ios::out);
 	file << shellInit() << '\n';
@@ -103,7 +103,7 @@ void JavaProject::generateBuildFiles()
 	}
 	file.close();
 
-	fileName = m_dir + "/build.sh";
+	fileName = m_dir + "/run";
 
 	file.open(fileName, std::ios::out);
 	file << shellInit() << '\n';

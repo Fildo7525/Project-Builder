@@ -15,11 +15,11 @@
  * This class generates main.cpp file which includes ./src/${directory}.cpp and ./src/${directory}.h
  * As pointed out, the header and source files are generated in separated directory named 'src'.
  * There is clreated a library 'lib' using cmake and added to the main cmake in the root direcotry.
- * Additional two files are generated to ease the compilation. Both script files will have shebang generated according to the environment variable
- * ${SEHLL}. The files are 'build.sh' and 'compile.sh'
- * As the names say the build will build the project and than run the executable stored in 'build' folder.
- * On the other hand the 'compile.sh' will just compile the project and store the makefile and execute make in build directory.
- * The project sturcture will than look something like this:<br>
+ * Additional two files are generated to ease the compilation. Both script files will have shebang
+ * generated according to the environment variable ${SEHLL}. The files are 'run' and 'compile'
+ * As the names say the build will build the project and than run the executable stored in 'build'
+ * folder. On the other hand the 'compile' will just compile the project and store the makefile
+ * and execute make in build directory. The project sturcture will than look something like this:<br>
  <pre>
   project +
           | - src +
@@ -27,8 +27,8 @@
           |       | - project.h
           | - main.cpp
           | - CMakeLists.txt
-          | - build.sh
-          | - compile.sh
+          | - run
+          | - compile
  </pre>
  * Based on the flags the project can support Qt5, OpenCV and Raspbery Pi
  * You are able to decide wether you want to initailse git repositary.
@@ -79,7 +79,7 @@ private:
 	void generateCmakeFile();
 
 	/**
-	 * @brief Create build.sh and compile.sh files.
+	 * @brief Create run and compile files.
 	 */
 	void generateBuildFiles();
 };

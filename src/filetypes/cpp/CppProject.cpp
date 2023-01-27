@@ -12,7 +12,7 @@ CppProject::CppProject(const std::string &directory, const flags &options)
 void CppProject::generate()
 {
 	std::cout << "m_dir: " << m_dir << std::endl;
-	std::string command = "mkdir -p " + m_dir + "/src && cd " + m_dir + " && touch src/" + m_dir + ".cpp src/" + m_dir + ".h src/CMakeLists.txt build.sh compile.sh && chmod +x build.sh compile.sh";
+	std::string command = "mkdir -p " + m_dir + "/src && cd " + m_dir + " && touch src/" + m_dir + ".cpp src/" + m_dir + ".h src/CMakeLists.txt run compile && chmod +x run compile";
 	executeCommand(command, INITIALIZE_DIR_ERROR);
 
 	generateMainFile();
@@ -193,7 +193,7 @@ void CppProject::generateCmakeFile()
 void CppProject::generateBuildFiles()
 {
 	indent tabs;
-	std::string fileName = m_dir + "/build.sh";
+	std::string fileName = m_dir + "/run";
 	std::fstream file(fileName, std::ios::out);
 
 	file << shellInit()
@@ -203,7 +203,7 @@ void CppProject::generateBuildFiles()
 		<< "\nfi\n" << std::endl;
 	file.close();
 
-	fileName = m_dir + "/compile.sh";
+	fileName = m_dir + "/compile";
 	file.open(fileName, std::ios::out);
 	file << shellInit()
 		 << "\n\nclear\ncd build/\nmake -j16\n" << std::endl;

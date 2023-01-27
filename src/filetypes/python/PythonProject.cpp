@@ -26,10 +26,10 @@ void PythonProject::makeMainFiles()
 
 void PythonProject::makeBuildFiles()
 {
-	std::string command = "cd " + m_dir + " && touch build.sh && chmod 744 build.sh";
+	std::string command = "cd " + m_dir + " && touch run && chmod 744 run";
 	executeCommand(command);
 
-	std::ofstream file(m_dir + "/build.sh");
+	std::ofstream file(m_dir + "/run");
 	file << shellInit() << "\n\n"
 		<< "python main.py\n";
 	file.close();

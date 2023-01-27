@@ -62,8 +62,8 @@ Generates project folder with specified name in the argument
 
   - build/
   - compile_commands.json (compilation flags for language servers (LSP's) like clangd)
-  - build.sh (contains code for compilation and launching the code)
-  - compile.sh (contains code for compilation)
+  - run (contains code for compilation and launching the code)
+  - compile (contains code for compilation)
   - main.cpp
   - src/`ProjectName`.cpp
   - src/`ProjectName`.h
@@ -81,8 +81,8 @@ Generates project folder with specified name in the argument
 
 ### Java
 
-  - build.sh
-  - compile.sh <br />
+  - run
+  - compile <br />
 You are asked to enter package name.<br />
 There will be created:
  - Main.java
@@ -96,7 +96,7 @@ With `maven` option set there will be also pom.xml
 
 ### Python
 
- - build.sh
+ - run
  - main.py
 
 #### Supported options
@@ -117,7 +117,8 @@ NOTE: For supported options the appropriate dependencies have to be installed.
 
 If you are looking for a code editor or an IDE. I highly recommend ```neovim```
 My neovim config is adjusted for this project creator. Check it out if you want
-https://github.com/Fildo7525/nvimLua. To start with your own configuration watch the [Neovim from scratch](https://www.youtube.com/watch?v=ctH-a-1eUME&list=PLhoH5vyxr6Qq41NFL4GvhFp-WLd5xzIzZ) series.
+https://github.com/Fildo7525/nvimLua. To start with your own configuration watch
+the [Neovim from scratch](https://www.youtube.com/watch?v=ctH-a-1eUME&list=PLhoH5vyxr6Qq41NFL4GvhFp-WLd5xzIzZ) series.
 
 ## VS Code
 
@@ -127,12 +128,12 @@ switch into JSON view ( icon in the top right corner ) and add a snippet
     {
         "key": "ctrl+b",
         "command": "workbench.action.terminal.sendSequence",
-        "args": { "text": "./build.sh\n" }
+        "args": { "text": "./run\n" }
     },
 
 -> ```Ctrl + B``` keybinding to build the project, although you can set it to your own keybinding<br />
 -> ``` workbench.action.terminal.sendSequence ``` sends the command to console<br />
--> ``` ./build.sh\n ``` the send command<br />
+-> ``` ./run\n ``` the send command<br />
 
 ## Updates
 
