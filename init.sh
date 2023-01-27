@@ -1,8 +1,9 @@
 cmake -S . -B ./build
 cd build/
 nice make -j4 && cp ./buildProject ..
-
 cd ..
+sudo cp ./buildProject /usr/bin/buildProject
+
 BUILD_DIR="$(pwd)/build"
 STARTUP_DIR="$(pwd)/startup"
 LINK=$HOME/.local/share/zinit/completions/_buildProject
