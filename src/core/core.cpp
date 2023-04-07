@@ -5,6 +5,7 @@
 #include "src/filetypes/java/JavaProject.h"
 #include "src/filetypes/python/PythonProject.h"
 
+#include <fstream>
 #include <iostream>
 #include <memory>
 
@@ -14,35 +15,13 @@
 
 std::ostream &printHelp(std::ostream &os)
 {
-	indent tabs;
-	return os << tabs.up()() << "~ Help for Project-Builder ~\n\n"
-			  << "Command execution:\n"
-			  << tabs() << "buildProject <projectname> --type/-t <language> [options]\n\n"
-
-			  << tabs() << "--help -h\tPrint this help\n"
-			  << tabs() << "--no-git -g\tProhibit default git repozitory initialization\n"
-			  << tabs() << "--type -t\tDefine project language\n"
-			  << tabs() << "--qt5 -q\tLink qt5 to your C++ project\n"
-			  << tabs() << "--opencv -c\tLink OpenCV to your C++ project\n"
-			  << tabs() << "--rpi\t\tLink WiringPi to your C++ project\n"
-			  << tabs() << "--maven -m\tUse maven as Java build system\n"
-			  << tabs() << "--list-languages\tList all currently supported languages\n"
-			  << tabs() << "--list-completion\tList all supported commands\n\n"
-			  << tabs() << "--aoc\tPrepare the project for advent of code\n\n"
-
-			  << tabs() << "supported languages:\n"
-			  << tabs.up()() << "cpp:\t--type c / cpp / c++\n"
-			  << tabs()		 << "java:\t--type j / java\n"
-			  << tabs()		 << "python:\t--type py / python\n\n"<< tabs.down()()
-			  << "options for C++:\n"
-			  << tabs.up()() << "QT5:\t--qt5 / -q\n"
-			  << tabs()		 << "OpenCV:\t--opencv / -c\n"
-			  << tabs()		 << "Raspberry Pi:\t--rpi\n" << tabs.down()()
-			  << "options for Java:\n"
-			  << tabs.up()() << "Maven:\t--maven / -m\n" << tabs.down()()
-			  << "options for Python:\n"
-			  << tabs.up()() << "Python does not currently support any optinos."
-	<< std::endl;
+	std::fstream helpFile(HELP_FILE, std::ios::in);
+	while(helpFile.good()) {
+		std::string line;
+		std::getline(helpFile, line);
+		os << line << std::endl;
+	}
+	return os;
 }
 
 void error(const std::string &msg)

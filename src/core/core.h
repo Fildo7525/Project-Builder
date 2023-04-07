@@ -10,7 +10,6 @@
 
 #include <iostream>
 #include <memory>
-#include <string>
 
 #define INITIALIZE_DIR_ERROR "Directory could not be initialized. It already exists."
 

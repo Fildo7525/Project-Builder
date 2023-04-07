@@ -7,8 +7,6 @@
 
 #include "flags.h"
 
-#include <string>
-
 /**
  * @class Project
  * @brief Virtual class supporting creation of a project.

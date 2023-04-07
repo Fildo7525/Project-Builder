@@ -1,0 +1,28 @@
+buildProject <projectname> --type/-t <language> [options]
+
+	--help -h			Print this help
+	--no-git -g			Prohibit default git repozitory initialization
+	--type -t			Define project language
+	--qt5 -q			Link qt5 to your C++ project
+	--opencv -c			Link OpenCV to your C++ project
+	--rpi				Link WiringPi to your C++ project
+	--maven -m			Use maven as Java build system
+	--list-languages	List all currently supported languages
+	--list-completion	List all supported commands
+	--aoc				Prepare the project for advent of code\
+
+supported languages:
+	cpp:	--type c / cpp / c++
+	java:	--type j / java
+	python:	--type py / python
+
+options for C++:
+			QT5:	--qt5 / -q
+			OpenCV:	--opencv / -c
+			Raspberry Pi:	--rpi
+
+options for Java:
+			Maven:	--maven / -m
+
+options for Python:
+			Python does not currently support any optinos.

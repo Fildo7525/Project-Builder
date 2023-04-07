@@ -7,8 +7,6 @@
 
 #include "core.h"
 
-#include <string>
-
 #define DEFAULT_PACKAGE_LOCATION "com.example"
 
 /**

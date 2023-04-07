@@ -7,6 +7,10 @@ sudo cp ./buildProject /usr/bin/buildProject
 BUILD_DIR="$(pwd)/build"
 STARTUP_DIR="$(pwd)/startup"
 LINK=$HOME/.local/share/zinit/completions/_buildProject
+DATA_DIR=$HOME/.local/share/projectBuilder
+
+mkdir -p $DATA_DIR/helpers
+cp $(pwd)/helpers/* $DATA_DIR/helpers
 
 if [[ $SHELL = "/usr/bin/zsh" || $SHELL = "/bin/zsh" ]]; then
 	echo "export PATH=\"$PATH:$BUILD_DIR\"" >> $HOME/.zshrc

@@ -4,8 +4,14 @@
  */
 
 #pragma once
+
+#include <cstdlib>
+#include <string>
+
 #define COMPLETION_LIST "--type -t -a --aoc --qt5 -q --rpi --maven -m --opencv -c --no-git -g --help -h --list-completion --list-languages"
 #define LANGUAGES_LIST "cpp java python"
+#define HELPER_DIR std::string(std::getenv("HOME")) + "/.local/share/projectBuilder/helpers"
+#define HELP_FILE HELPER_DIR"/helptext.help"
 
 /**
  * @class flags

@@ -1,6 +1,5 @@
 #include "BuildProject.h"
 #include "core.h"
-#include <string>
 
 #define AOC_HEADERS "#include <algorithm>\n#include <fstream>\n#include <iterator>\n#include <memory>\n#include <numeric>\n#include <vector>\n"
 
