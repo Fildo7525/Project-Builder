@@ -9,7 +9,6 @@
 #include <memory>
 
 #include <stdexcept>
-#include <string>
 #include <unistd.h>
 #include <getopt.h>
 
@@ -113,12 +112,15 @@ std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(const int argc, cha
 					exit(2);
 				}
 
-				if(projectType == "java" || projectType == "j")
+				if (projectType == "java" || projectType == "j") {
 					opts.lang = flags::language::java;
-				else if(projectType == "cpp" || projectType == "c++" || projectType == "c")
+				}
+				else if (projectType == "cpp" || projectType == "c++" || projectType == "c") {
 					opts.lang = flags::language::cpp;
-				else if(projectType == "py" || projectType == "python")
+				}
+				else if (projectType == "py" || projectType == "python") {
 					opts.lang = flags::language::python;
+				}
 				break;
 			}
 
