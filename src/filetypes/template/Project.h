@@ -6,6 +6,7 @@
 #pragma once
 
 #include "flags.h"
+#include <memory>
 
 /**
  * @class Project
@@ -14,6 +15,7 @@
 class Project
 {
 public:
+	using Ptr = std::shared_ptr<Project>;
 	/**
 	 * @brief Constructor
 	 */

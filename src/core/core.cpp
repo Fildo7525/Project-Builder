@@ -51,12 +51,12 @@ std::string shellInit()
 	return std::string("#!") +  getenv("SHELL");
 }
 
-std::pair<flags, std::shared_ptr<Project>> deduceFlagOptions(const int argc, char **argv)
+std::pair<flags, Project::Ptr> deduceFlagOptions(const int argc, char **argv)
 {
 	flags opts;
 	int option;
 	int false_option = 0;
-	std::shared_ptr<Project> newProject(nullptr);
+	Project::Ptr newProject(nullptr);
 
 	struct option long_options[] = {
 		{"type",	required_argument,	0, 't'},
