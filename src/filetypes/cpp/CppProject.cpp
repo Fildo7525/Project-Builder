@@ -10,7 +10,6 @@ CppProject::CppProject(const std::string &directory, const flags &options)
 
 void CppProject::generate()
 {
-	std::cout << "m_dir: " << m_dir << std::endl;
 	std::string command = "mkdir -p " + m_dir + "/src && cd " + m_dir + " && touch src/" + m_dir + ".cpp src/" + m_dir + ".h src/CMakeLists.txt run compile && chmod +x run compile";
 	executeCommand(command, INITIALIZE_DIR_ERROR);
 
@@ -192,20 +191,35 @@ void CppProject::generateCmakeFile()
 void CppProject::generateBuildFiles()
 {
 	indent tabs;
-	std::string fileName = m_dir + "/run";
-	std::fstream file(fileName, std::ios::out);
+	std::fstream file(m_dir + "/run", std::ios::out);
+	std::string numberOfCores = "\n\nlet \"numberOfCores=$(cat /proc/cpuinfo | grep \"processor\" | wc -l)*2\"";
 
-	file << shellInit()
-		<< "\ncd build/\nmake -j16\nif [ $? -eq 0 ];then\n" 
-			<< tabs.up()() << "clear\n"
-			<< tabs() << "./" << m_dir
-		<< "\nfi\n" << std::endl;
+	file << shellInit() << '\n'
+
+		<< "./compile\n\n"
+
+		<< "pushd build\n\n"
+
+		<< "if [ $? -eq 0 ];then\n"
+		<< "	clear\n"
+		<< "	./" << projectName() <<"\n"
+		<< "fi\n\n"
+
+		<< "popd" << std::endl;
 	file.close();
 
-	fileName = m_dir + "/compile";
-	file.open(fileName, std::ios::out);
-	file << shellInit()
-		 << "\n\nclear\ncd build/\nmake -j16\n" << std::endl;
+	file.open(m_dir + "/compile", std::ios::out);
+	file << shellInit() << '\n'
+
+		<< "build_dir=build\n"
+		<< "if [ ! -d $build_dir ]; then\n"
+		<< "	mkdir $build_dir\n"
+		<< "	cmake -S . -B $build_dir -DCMAKE_EXPORT_COMPILE_COMMANDS=1\n"
+		<< "fi\n\n"
+
+		<< "cd build/\n"
+		<< "make -j16" << std::endl;
+
 	file.close();
 }
 
