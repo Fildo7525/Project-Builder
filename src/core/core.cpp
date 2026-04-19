@@ -61,6 +61,7 @@ std::pair<flags, Project::Ptr> deduceFlagOptions(const int argc, char **argv)
 	struct option long_options[] = {
 		{"type",	required_argument,	0, 't'},
 		{"qt5",		no_argument,		0, 'q'},
+		{"std",		required_argument,	0, 93 },
 		{"rpi",		no_argument,		0, 90 },
 		{"maven",	no_argument,		0, 'm'},
 		{"opencv",	no_argument,		0, 'c'},
@@ -135,6 +136,17 @@ std::pair<flags, Project::Ptr> deduceFlagOptions(const int argc, char **argv)
 			case 92:
 				std::cout << LANGUAGES_LIST << std::endl;
 				exit(0);
+
+			case 93: {
+				opts.cppVersion = std::stoi(optarg);
+
+				if (!opts.isCppVersionValid()) {
+					error("Invalid C++ std version.");
+					printHelp();
+					exit(93);
+				}
+				break;
+			}
 
 			case 'a': {
 				opts.aoc = true;

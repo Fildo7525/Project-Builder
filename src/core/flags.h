@@ -5,10 +5,11 @@
 
 #pragma once
 
+#include <cstdint>
 #include <cstdlib>
 #include <string>
 
-#define COMPLETION_LIST "--type -t -a --aoc --qt5 -q --rpi --maven -m --opencv -c --no-git -g --help -h --list-completion --list-languages"
+#define COMPLETION_LIST "--type -t -a --aoc --qt5 -q --rpi --maven -m --opencv -c --no-git -g --help -h --list-completion --list-languages --std --version -v"
 #define LANGUAGES_LIST "cpp java python"
 #define HELPER_DIR std::string(std::getenv("HOME")) + "/.local/share/projectBuilder/helpers"
 #define HELP_FILE HELPER_DIR"/helptext.help"
@@ -40,6 +41,7 @@ struct flags
 	bool openCV;
 	/// Dedicated C++ flag: True if you want to define cpp project and link it with WiringPi.
 	bool rasPi;
+	int cppVersion;
 
 	// Java flags
 	/// Dedicated C++ flag: Wether you want to use maven build system or not.
@@ -68,5 +70,10 @@ struct flags
 		, useGit(true)
 		, help(false)
 		, aoc(false) { }
+
+	bool isCppVersionValid()
+	{
+		return (cppVersion - 11) % 3 == 0;
+	}
 };
 

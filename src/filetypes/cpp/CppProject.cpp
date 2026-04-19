@@ -129,7 +129,7 @@ void CppProject::generateCmakeFile()
 	file << "cmake_minimum_required(VERSION " << cmakeVersion() << ")\n"
 		<< "project(" << m_dir << " VERSION " << cmakeVersion() << ")\n\n"
 
-		<< "set(CMAKE_CXX_STANDARD 17)\n"
+		<< "set(CMAKE_CXX_STANDARD " << m_languageFlags.cppVersion << ")\n"
 		<< "set(CMAKE_CXX_STANDARD_REQUIRED ON)\n"
 		<< "set(CMAKE_EXPORT_COMPILE_COMMANDS ON)\n"
 		<< "set(CMAKE_BUILD_TYPE Debug)\n\n";

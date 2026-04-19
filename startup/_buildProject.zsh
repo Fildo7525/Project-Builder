@@ -12,6 +12,7 @@ args=( \
 	{--opencv,-c}:"Link OpenCV to your C++ project" \
 	{--maven,-m}:"Use maven as Java build system" \
 	"--rpi:Link WiringPi to your C++ project" \
+	"--std:Specify which C++ std version to use" \
 	"--list-languages:List all currently supported languages" \
 	"--list-completion:List all supported commands" \
 	"--version:Show the current program's version" \
