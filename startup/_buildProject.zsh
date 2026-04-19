@@ -14,6 +14,7 @@ args=( \
 	"--rpi:Link WiringPi to your C++ project" \
 	"--list-languages:List all currently supported languages" \
 	"--list-completion:List all supported commands" \
+	"--version:Show the current program's version" \
 )
 
 _arguments \

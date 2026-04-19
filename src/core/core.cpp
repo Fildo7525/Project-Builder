@@ -69,6 +69,7 @@ std::pair<flags, Project::Ptr> deduceFlagOptions(const int argc, char **argv)
 		{"list-completion",	no_argument,0, 91},
 		{"list-languages",	no_argument,0, 92},
 		{"aoc",		no_argument,		0, 'a'},
+		{"version",	no_argument,		0, 'v'},
 		{0,			0,					0,  0 }
 	};
 
@@ -139,6 +140,10 @@ std::pair<flags, Project::Ptr> deduceFlagOptions(const int argc, char **argv)
 				opts.aoc = true;
 				break;
 			}
+
+			case 'v':
+				std::cout << "projectBuilder version: " << VERSION << std::endl;
+				exit(0);
 
 			default:
 				std::perror("Getopt: "), opts.err = true;

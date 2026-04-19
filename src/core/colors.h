@@ -12,3 +12,5 @@
 #define ORANGE "\033[48:2:255:165;1m"
 #define NORM "\033[0;0m"
 
+#define VERSION "1.0.1"
+
